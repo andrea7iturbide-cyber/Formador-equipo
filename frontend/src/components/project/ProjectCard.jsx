@@ -25,7 +25,7 @@ export function RoleDots({ roles }) {
     <div className="flex items-center gap-2">
       <div className="flex gap-1" aria-hidden="true">
         {roles.map((r) => (
-          <span key={r.id} className={`h-1.5 w-5 rounded-full ${r.cubiertoPor ? "bg-success" : "bg-warn"}`} />
+          <span key={r.id} className={`h-1.5 w-5 rounded-full ${r.cubiertoPor ? "bg-success" : "bg-highlight"}`} />
         ))}
       </div>
       <span className="text-xs text-ink-2">

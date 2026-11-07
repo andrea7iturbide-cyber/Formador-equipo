@@ -1,11 +1,11 @@
-import { Check, CircleDashed, Lock, X } from "lucide-react"
+import { Check, Lock, Plus, X } from "lucide-react"
 
 // Cada variante combina color + ícono + texto accesible: nunca solo color.
 const VARIANTS = {
   neutral: { cls: "border-line bg-surface-2 text-ink", Icon: null, sr: "" },
   match: { cls: "border-success-line bg-success-soft text-success-ink", Icon: Check, sr: "Coincide con el proyecto: " },
   shared: { cls: "border-success-line bg-success-soft text-success-ink", Icon: Check, sr: "Interés en común: " },
-  needed: { cls: "border-warn-line bg-warn-soft text-warn-ink", Icon: CircleDashed, sr: "Pendiente de cubrir: " },
+  needed: { cls: "border-highlight/60 bg-highlight-soft text-highlight-ink", Icon: Plus, sr: "Pendiente de cubrir: " },
   private: { cls: "border-line bg-surface text-ink-2 border-dashed", Icon: Lock, sr: "Privado: " },
 }
 
@@ -18,7 +18,7 @@ export default function SkillChip({ children, label, variant = "neutral", level,
     <span
       className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-medium whitespace-nowrap ${cls} ${className}`}
     >
-      {Icon && <Icon aria-hidden="true" className="size-3.5 shrink-0" strokeWidth={2.5} />}
+      {Icon && !onRemove && <Icon aria-hidden="true" className="size-3.5 shrink-0" strokeWidth={2.5} />}
       {sr && <span className="sr-only">{sr}</span>}
       {children}
       {level && <span className="opacity-70">· {LEVELS[level] ?? level}</span>}

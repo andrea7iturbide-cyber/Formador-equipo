@@ -209,7 +209,7 @@ function Recommendations({ onState }) {
 
 /* ----------------------- Proyectos en la plataforma ----------------------- */
 
-const TIPO = { academico: "Académico", personal: "Personal" }
+const TIPO = { academico: "Académico", personal: "Personal", deportivo: "Deportivo", videojuegos: "Videojuegos", general: "General" }
 
 function ProjectsFeed() {
   const proyectos = useAsync(obtenerProyectos)
@@ -278,7 +278,10 @@ function ProjectsFeed() {
                 {p.creadorNombre && <p className="mt-0.5 text-xs text-ink-2">Publicado por {p.creadorNombre}</p>}
                 {p.descripcion && <p className="mt-2 line-clamp-2 text-sm text-ink-2">{p.descripcion}</p>}
                 {buscan.length > 0 && (
-                  <ul className="mt-4 flex flex-wrap gap-1.5" aria-label="Roles que buscan">
+                  <p className="eyebrow mt-4 mb-2 text-highlight-ink" aria-hidden="true">Buscan</p>
+                )}
+                {buscan.length > 0 && (
+                  <ul className="flex flex-wrap gap-1.5" aria-label="Roles que buscan">
                     {buscan.slice(0, 3).map((nombre) => (
                       <li key={nombre}>
                         <SkillChip variant="needed">{nombre}</SkillChip>

@@ -16,7 +16,7 @@ export function CoverageBar({ cubiertos, total }) {
         {Array.from({ length: total }, (_, i) => (
           <span
             key={i}
-            className={`flex-1 transition-colors duration-500 ${i < cubiertos ? "bg-success" : "bg-warn/60"}`}
+            className={`flex-1 transition-colors duration-500 ${i < cubiertos ? "bg-success" : "bg-highlight"}`}
           />
         ))}
       </div>
@@ -26,7 +26,7 @@ export function CoverageBar({ cubiertos, total }) {
           {total - cubiertos > 0 && (
             <>
               {" · "}
-              <span className="font-semibold text-warn-ink">{total - cubiertos} por cubrir</span>
+              <span className="font-semibold text-highlight-ink">{total - cubiertos} por cubrir</span>
             </>
           )}
         </span>

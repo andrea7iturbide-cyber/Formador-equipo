@@ -165,7 +165,7 @@ export default function RecommendationCard({
                             <Check aria-hidden="true" className="size-3.5" strokeWidth={3} /> Lo cubre
                           </span>
                         ) : (
-                          <span className="text-xs font-medium text-warn-ink">Sigue pendiente</span>
+                          <span className="text-xs font-medium text-highlight-ink">Sigue pendiente</span>
                         )}
                       </li>
                     )

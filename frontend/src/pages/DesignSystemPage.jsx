@@ -172,7 +172,7 @@ export default function DesignSystemPage() {
           {[
             ["neutral", "Neutra · habilidad general", "Redacción"],
             ["match", "Coincidente · cubre una necesidad", "Diseño de interfaces"],
-            ["needed", "Necesaria · nadie la cubre aún", "Programación backend"],
+            ["needed", "Buscan · rol o habilidad por cubrir (oportunidad)", "Programación backend"],
             ["private", "Privada · solo la ve la IA", "Hablar en público"],
           ].map(([v, d, s]) => (
             <div key={v} className="flex items-center justify-between gap-3">

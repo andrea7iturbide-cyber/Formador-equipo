@@ -114,7 +114,7 @@ function Comparison() {
                 </li>
               ))}
             </ul>
-            <p className="eyebrow mt-6 text-warn-ink">Sin cubrir</p>
+            <p className="eyebrow mt-6 text-highlight-ink">Sin cubrir</p>
             <p className="mt-2 flex flex-wrap gap-1.5">
               <SkillChip variant="needed">Diseño</SkillChip>
               <SkillChip variant="needed">Backend</SkillChip>
