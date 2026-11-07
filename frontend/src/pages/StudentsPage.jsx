@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useSearchParams } from "react-router-dom"
 import { Search, SearchX, Send, Sparkles, Users, X } from "lucide-react"
 import Avatar from "../components/ui/Avatar"
 import Button from "../components/ui/Button"
@@ -46,7 +46,9 @@ const selectCls = "min-h-11 w-full rounded-lg border border-line bg-surface px-3
 
 export default function StudentsPage() {
   const usuario = getUsuarioActual()
-  const [query, setQuery] = useState("")
+  // Un enlace como /estudiantes?q=FastAPI llega con la búsqueda ya escrita
+  const [searchParams] = useSearchParams()
+  const [query, setQuery] = useState(() => searchParams.get("q") ?? "")
   const [students, setStudents] = useState([])
   const [selectedId, setSelectedId] = useState(null)
   const [loadingStudents, setLoadingStudents] = useState(true)
