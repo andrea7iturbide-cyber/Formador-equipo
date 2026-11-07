@@ -59,7 +59,7 @@ export default function TeamPage() {
       <Card className="mb-8 p-5 sm:p-7">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div className="min-w-0">
-            <h1 className="text-h1 font-bold">{team.nombre}</h1>
+            <h1 className="text-h1 font-extrabold">{team.nombre}</h1>
             <Link to={`/proyectos/${project.id}`} className="mt-1 inline-flex text-sm text-ink-2 hover:text-primary hover:underline">
               Ver proyecto: {project.titulo}
             </Link>
@@ -73,7 +73,7 @@ export default function TeamPage() {
 
       {(
         <section aria-labelledby="coverage-title" className="mb-8">
-          <h2 id="coverage-title" className="mb-4 text-h2 font-semibold">Cobertura del equipo</h2>
+          <h2 id="coverage-title" className="mb-4 text-h2 font-extrabold">Cobertura del equipo</h2>
           <Card className="p-5 sm:p-6">
             <TeamCoverageChart coverage={team.cobertura_habilidades} />
           </Card>
@@ -81,7 +81,7 @@ export default function TeamPage() {
       )}
 
       <section aria-labelledby="members-title">
-        <h2 id="members-title" className="mb-4 text-h2 font-semibold">
+        <h2 id="members-title" className="mb-4 text-h2 font-extrabold">
           Participantes <span className="font-normal text-ink-2">({members.length})</span>
         </h2>
         {members.length === 0 ? (
@@ -108,7 +108,7 @@ export default function TeamPage() {
                   </p>
                   {member.fortalezas.length > 0 && (
                     <div>
-                      <p className="mb-2 text-label font-semibold tracking-wide text-ink-2 uppercase">Habilidades</p>
+                      <p className="eyebrow mb-2 text-ink-2">Habilidades</p>
                       <ul className="flex flex-wrap gap-1.5">
                         {member.fortalezas.map((fortaleza) => (
                           <li key={fortaleza.nombre}>

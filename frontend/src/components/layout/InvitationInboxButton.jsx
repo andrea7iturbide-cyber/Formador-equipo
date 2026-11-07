@@ -18,7 +18,7 @@ export function InvitationInboxButton({ count }) {
       {count === 1 ? (
         <span aria-hidden="true" className="absolute -top-0.5 -right-0.5 size-3 rounded-full border-2 border-canvas bg-danger" />
       ) : count > 1 ? (
-        <span aria-hidden="true" className="absolute -top-2 -right-2 grid min-h-5 min-w-5 place-items-center rounded-full border-2 border-canvas bg-danger px-1 text-[10px] leading-none font-bold text-white">
+        <span aria-hidden="true" className="absolute -top-2 -right-2 grid min-h-5 min-w-5 place-items-center rounded-full border-2 border-canvas bg-danger px-1 text-label leading-none font-semibold text-white">
           {count}
         </span>
       ) : null}

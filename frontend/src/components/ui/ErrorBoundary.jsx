@@ -16,7 +16,7 @@ export default class ErrorBoundary extends Component {
       return (
         <main className="grid min-h-dvh place-items-center bg-canvas px-4">
           <section role="alert" className="max-w-md rounded-2xl border border-danger/30 bg-surface p-6 text-center shadow-card">
-            <h1 className="text-h2 font-bold text-ink">No pudimos mostrar esta página</h1>
+            <h1 className="text-h2 font-extrabold text-ink">No pudimos mostrar esta página</h1>
             <p className="mt-2 text-sm text-ink-2">
               Ocurrió un error al cargar la sección. Puedes volver a intentarlo recargando la página.
             </p>

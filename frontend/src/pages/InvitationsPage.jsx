@@ -1,5 +1,6 @@
 import { useState } from "react"
-import { Inbox, Send } from "lucide-react"
+import { Inbox, Mail, Send } from "lucide-react"
+import PageHeader from "../components/layout/PageHeader"
 import { Tabs } from "../components/ui/Controls"
 import { EmptyState, ErrorState, Skeleton } from "../components/ui/Feedback"
 import { useToast } from "../components/ui/Toast"
@@ -43,10 +44,14 @@ export default function InvitationsPage() {
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-6 sm:px-8 sm:py-10">
-      <header className="mb-6 animate-fade-up">
-        <h1 className="text-h1 font-bold">Invitaciones</h1>
-        <p className="mt-1 text-ink-2">Las que te enviaron y las que tú enviaste, con su estado.</p>
-      </header>
+      <PageHeader
+        icon={Mail}
+        tone="ambar"
+        eyebrow="Te buscan"
+        title="Tus"
+        accent="invitaciones"
+        desc="Las que te enviaron y las que tú enviaste, con su estado."
+      />
 
       <Tabs
         label="Tipo de invitación"

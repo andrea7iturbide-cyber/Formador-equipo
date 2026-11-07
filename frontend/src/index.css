@@ -9,19 +9,24 @@
    oscuro solo tenga que redefinir los valores en .dark.
 ------------------------------------------------------------------- */
 :root {
-  --canvas: #f6faf9;        /* 60 % fondo general (gris con matiz verde azulado) */
-  --surface: #ffffff;       /* tarjetas */
-  --surface-2: #eef5f4;     /* rellenos sutiles */
-  --ink: #0f1f1d;           /* 30 % estructura y texto */
-  --ink-2: #5b6f6c;         /* texto secundario */
-  --line: #dde8e6;          /* bordes */
+  /* Identidad: violeta = marca y acciones · turquesa = IA · ámbar = destacados puntuales */
+  --canvas: #f1effa;        /* 60 % fondo general: un tono más profundo para que las superficies blancas resalten */
+  --surface: #ffffff;       /* superficies */
+  --surface-2: #ebe8f7;     /* rellenos sutiles */
+  --ink: #25233a;           /* texto principal */
+  --ink-2: #64627b;         /* texto secundario (#77758C oscurecido para contraste AA sobre el fondo) */
+  --line: #e3e0f0;          /* bordes */
 
-  --primary: #0f766e;       /* 10 % acento y CTA (teal 700: contraste AA con blanco) */
-  --primary-hover: #115e59;
-  --primary-soft: #f0fdfa;
+  --primary: #6957e8;       /* 10 % acciones y marca (contraste AA con blanco) */
+  --primary-hover: #5644d4;
+  --primary-soft: #f0eefd;
 
-  --accent: #14b8a6;        /* teal brillante: degradados y brillos decorativos */
-  --accent-2: #6366f1;      /* índigo: segundo color de los degradados */
+  --accent: #36cfc9;        /* turquesa: solo decorativo o sobre fondos oscuros */
+  --accent-2: #8a7cf0;      /* violeta claro: segundo color de los degradados */
+
+  --highlight: #ffb86b;     /* ámbar: destacados, nunca para texto sobre blanco */
+  --highlight-ink: #9a4d00;
+  --highlight-soft: #fff3e6;
 
   --success: #22c55e;
   --success-ink: #15803d;
@@ -36,27 +41,32 @@
   --danger: #dc2626;
   --danger-soft: #fef2f2;
 
-  --ai-soft: #eef2ff;
-  --ai-line: #c7d2fe;
-  --ai-ink: #4338ca;
+  /* IA: familia turquesa, distinta de la marca para que se reconozca de inmediato */
+  --ai-soft: #e8faf9;
+  --ai-line: #a6ebe8;
+  --ai-ink: #0b7a76;
 
   color-scheme: light;
 }
 
 .dark {
-  --canvas: #081312;
-  --surface: #10201e;
-  --surface-2: #182d2a;
-  --ink: #ecf7f5;
-  --ink-2: #93aca8;
-  --line: #24403c;
+  --canvas: #100f1f;
+  --surface: #17152f;
+  --surface-2: #211e3d;
+  --ink: #f3f2fa;
+  --ink-2: #a9a7c0;
+  --line: #2e2b4d;
 
-  --primary: #0d9488;
-  --primary-hover: #14b8a6;
-  --primary-soft: #134e4a55;
+  --primary: #7e6ef0;
+  --primary-hover: #9587f4;
+  --primary-soft: #6957e833;
 
-  --accent: #2dd4bf;
-  --accent-2: #818cf8;
+  --accent: #36cfc9;
+  --accent-2: #a79bf7;
+
+  --highlight: #ffb86b;
+  --highlight-ink: #ffcf99;
+  --highlight-soft: #ffb86b22;
 
   --success-ink: #4ade80;
   --success-soft: #14532d55;
@@ -68,15 +78,20 @@
 
   --danger-soft: #7f1d1d44;
 
-  --ai-soft: #1e1b4b88;
-  --ai-line: #3730a3;
-  --ai-ink: #a5b4fc;
+  --ai-soft: #36cfc91f;
+  --ai-line: #1f6f6c;
+  --ai-ink: #6ee7e2;
 
   color-scheme: dark;
 }
 
 @theme inline {
   --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, "Segoe UI", Roboto, sans-serif;
+  /* Serif editorial: solo para acentos en cursiva dentro de títulos */
+  --font-serif: "Instrument Serif", Georgia, "Times New Roman", serif;
+
+  /* Escenario oscuro para secciones editoriales; igual en tema claro y oscuro */
+  --color-stage: #17152f;
 
   --color-canvas: var(--canvas);
   --color-surface: var(--surface);
@@ -91,6 +106,10 @@
 
   --color-accent: var(--accent);
   --color-accent-2: var(--accent-2);
+
+  --color-highlight: var(--highlight);
+  --color-highlight-ink: var(--highlight-ink);
+  --color-highlight-soft: var(--highlight-soft);
 
   --color-success: var(--success);
   --color-success-ink: var(--success-ink);
@@ -111,25 +130,29 @@
 }
 
 @theme {
-  /* Escala tipográfica: tamaño / interlineado */
-  --text-display: 2.5rem;
-  --text-display--line-height: 1.15;
-  --text-display--letter-spacing: -0.025em;
-  --text-h1: 1.75rem;
-  --text-h1--line-height: 2.25rem;
-  --text-h1--letter-spacing: -0.02em;
-  --text-h2: 1.25rem;
-  --text-h2--line-height: 1.75rem;
-  --text-h3: 1rem;
-  --text-h3--line-height: 1.5rem;
-  --text-body: 0.9375rem;
-  --text-body--line-height: 1.5rem;
-  --text-label: 0.75rem;
+  /* Escala tipográfica única. Los dos niveles grandes se adaptan solos entre móvil y escritorio.
+     Nada por debajo de 12 px (etiquetas) ni de 13 px (texto). */
+  --text-display: clamp(2.5rem, 1.5rem + 3.2vw, 3.5rem);   /* 40 → 56 px: títulos principales */
+  --text-display--line-height: 1.05;
+  --text-display--letter-spacing: -0.03em;
+  --text-h1: clamp(1.875rem, 1.35rem + 2vw, 2.75rem);      /* 30 → 44 px: páginas y secciones */
+  --text-h1--line-height: 1.1;
+  --text-h1--letter-spacing: -0.025em;
+  --text-h2: 1.5rem;                                       /* 24 px: bloques */
+  --text-h2--line-height: 2rem;
+  --text-h2--letter-spacing: -0.015em;
+  --text-h3: 1.125rem;                                     /* 18 px: títulos de tarjeta */
+  --text-h3--line-height: 1.625rem;
+  --text-body: 1rem;                                       /* 16 px: lectura */
+  --text-body--line-height: 1.625rem;
+  --text-label: 0.75rem;                                   /* 12 px: etiquetas en mayúsculas */
   --text-label--line-height: 1rem;
+  --text-xs: 0.8125rem;                                    /* 13 px: mínimo para chips, fechas y contadores */
+  --text-xs--line-height: 1.125rem;
 
   /* Sombras: dos niveles */
-  --shadow-card: 0 1px 2px rgb(15 23 42 / 0.05), 0 1px 3px rgb(15 23 42 / 0.04);
-  --shadow-pop: 0 12px 32px -8px rgb(15 23 42 / 0.16), 0 2px 6px rgb(15 23 42 / 0.05);
+  --shadow-card: 0 1px 2px rgb(37 35 58 / 0.06), 0 6px 16px -6px rgb(105 87 232 / 0.12);
+  --shadow-pop: 0 18px 40px -12px rgb(105 87 232 / 0.28), 0 2px 6px rgb(37 35 58 / 0.06);
 
   /* Animaciones */
   --animate-fade-up: fade-up 0.35s cubic-bezier(0.2, 0.7, 0.2, 1) both;
@@ -139,6 +162,9 @@
   --animate-float: float 8s ease-in-out infinite;
   --animate-blob: blob 14s ease-in-out infinite;
   --animate-shimmer: shimmer 1.6s linear infinite;
+  --animate-sheen: sheen 6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  --animate-indeterminate: indeterminate 1.4s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+  --animate-dot: dot 1.2s ease-in-out infinite;
   --animate-bounce-in: bounce-in 0.6s cubic-bezier(0.3, 1.5, 0.5, 1) both;
   --animate-spin-slow: spin 12s linear infinite;
   --animate-slide-in: slide-in 0.3s cubic-bezier(0.2, 0.7, 0.2, 1) both;
@@ -173,6 +199,21 @@
     from { background-position: 200% 0; }
     to { background-position: -200% 0; }
   }
+  /* Destello de luz que cruza una superficie y descansa antes de repetirse */
+  /* Barra de progreso sin porcentaje: un tramo de luz que recorre la pista */
+  @keyframes indeterminate {
+    from { transform: translateX(-100%); }
+    to { transform: translateX(300%); }
+  }
+  /* Puntos de "pensando" */
+  @keyframes dot {
+    0%, 80%, 100% { opacity: 0.25; transform: translateY(0); }
+    40% { opacity: 1; transform: translateY(-3px); }
+  }
+  @keyframes sheen {
+    0% { transform: translateX(-250%) skewX(-16deg); }
+    25%, 100% { transform: translateX(450%) skewX(-16deg); }
+  }
   @keyframes bounce-in {
     0% { opacity: 0; transform: scale(0.6); }
     60% { opacity: 1; transform: scale(1.08); }
@@ -184,7 +225,33 @@
   }
 }
 
+/* Vidrio esmerilado para tarjetas sobre fondos de color.
+   Sin soporte de desenfoque, o si el usuario pide menos transparencia, pasa a sólido. */
+@utility glass {
+  background-color: rgb(255 255 255 / 0.12);
+  border: 1px solid rgb(255 255 255 / 0.3);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.4), 0 24px 48px -24px rgb(0 0 0 / 0.45);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  backdrop-filter: blur(18px) saturate(160%);
+  @supports not (backdrop-filter: blur(1px)) {
+    background-color: rgb(23 21 47 / 0.92);
+  }
+  @media (prefers-reduced-transparency: reduce) {
+    background-color: rgb(23 21 47 / 0.95);
+    backdrop-filter: none;
+  }
+}
+
 /* Texto con degradado (teal → índigo). Reservado para el titular del hero. */
+/* Etiqueta de sección: un solo estilo para todas las mayúsculas pequeñas */
+@utility eyebrow {
+  font-size: var(--text-label);
+  line-height: var(--text-label--line-height);
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
 @utility text-gradient {
   background-image: linear-gradient(90deg, var(--primary), var(--accent) 55%, var(--accent-2));
   background-clip: text;
@@ -196,6 +263,20 @@
 @utility shimmer {
   background-image: linear-gradient(90deg, var(--surface-2) 25%, var(--surface) 50%, var(--surface-2) 75%);
   background-size: 200% 100%;
+}
+
+/* Tono del registro: colores registrados para que el degradado cambie suave entre pasos */
+@property --tone-a { syntax: "<color>"; inherits: true; initial-value: #6957e8; }
+@property --tone-b { syntax: "<color>"; inherits: true; initial-value: #5644d4; }
+@property --tone-c { syntax: "<color>"; inherits: true; initial-value: #17152f; }
+
+@layer components {
+  .tone-shift {
+    transition: --tone-a 0.9s ease, --tone-b 0.9s ease, --tone-c 0.9s ease;
+  }
+  .tone-gradient {
+    background-image: linear-gradient(135deg, var(--tone-a), var(--tone-b) 55%, var(--tone-c));
+  }
 }
 
 /* Aparición al hacer scroll (la controla el componente <Reveal>) */
@@ -222,6 +303,7 @@
   }
   body {
     @apply bg-canvas font-sans text-body text-ink antialiased;
+    font-variant-numeric: tabular-nums;
   }
   :focus-visible {
     outline: 2px solid var(--primary);

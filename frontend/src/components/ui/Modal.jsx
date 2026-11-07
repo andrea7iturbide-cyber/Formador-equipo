@@ -62,7 +62,7 @@ export default function Modal({ open, onClose, title, description, children, foo
       >
         <header className="flex items-start gap-3 border-b border-line p-5">
           <div className="flex-1">
-            <h2 id={titleId} className="text-h2 font-semibold text-ink">
+            <h2 id={titleId} className="text-h2 font-extrabold text-ink">
               {title}
             </h2>
             {description && <p className="mt-0.5 text-sm text-ink-2">{description}</p>}

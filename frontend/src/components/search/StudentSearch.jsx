@@ -106,7 +106,7 @@ export default function StudentSearch() {
         <Button variant="secondary" onClick={() => setOpen((o) => !o)} aria-expanded={open} aria-label="Filtros">
           <SlidersHorizontal aria-hidden="true" className="size-4" />
           <span className="hidden sm:inline">Filtros</span>
-          {activos > 0 && <span className="grid size-5 place-items-center rounded-full bg-primary text-[11px] text-white">{activos}</span>}
+          {activos > 0 && <span className="grid size-5 place-items-center rounded-full bg-primary text-label text-white">{activos}</span>}
         </Button>
       </div>
 

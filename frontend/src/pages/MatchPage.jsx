@@ -31,12 +31,12 @@ export default function MatchPage() {
 
   const rec = result.data[Math.min(index, result.data.length - 1)]
   return <div className="relative mx-auto flex max-w-xl flex-col items-center px-4 py-8 sm:py-12">
-    <p className="text-label font-semibold tracking-[0.18em] text-primary uppercase">Coincidencia</p>
-    <h1 className="mt-2 text-center text-h1 font-bold">Proyectos para ti</h1>
+    <p className="eyebrow text-primary">Coincidencia</p>
+    <h1 className="mt-2 text-center text-h1 font-extrabold">Proyectos para ti</h1>
     <LocalProcessing className="mt-3" />
     <Card className="mt-8 w-full p-6">
       <p className="text-xs font-semibold text-ink-2">{rec.eligibility === "needs_review" ? "Requiere revisión" : "Elegible"} · {rec.evidence_group === "insufficient_evidence" ? "Evidencia insuficiente" : "Evidencia confirmada"}</p>
-      <h2 className="mt-3 text-h2 font-semibold">{rec.project?.titulo || `Proyecto ${rec.event_id}`}</h2>
+      <h2 className="mt-3 text-h2 font-extrabold">{rec.project?.titulo || `Proyecto ${rec.event_id}`}</h2>
       <p className="mt-2 text-sm text-ink-2">{rec.explanation.strengths[0] || rec.explanation.unknowns[0] || "Revisa los requisitos del proyecto."}</p>
       {rec.explanation.gaps.length > 0 && <p className="mt-2 text-sm text-warn-ink">{rec.explanation.gaps[0]}</p>}
       <Button as={Link} to={`/proyectos/${rec.event_id}`} className="mt-5">Ver proyecto</Button>

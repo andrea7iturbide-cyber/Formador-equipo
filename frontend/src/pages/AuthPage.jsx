@@ -7,6 +7,9 @@ import { Logo } from "../components/layout/AppLayout"
 import { LocalProcessing } from "../components/ui/AIBadge"
 import { iniciarSesion, registrarUsuario } from "../services/api"
 
+// El registro ocurre una sola vez: se deja ver la animación completa aunque el servidor responda antes.
+const SIGNUP_MIN_MS = 2000
+
 export default function AuthPage({ initialMode = "login" }) {
   const navigate = useNavigate()
   const [loading, setLoading] = useState(false)
@@ -35,14 +38,10 @@ export default function AuthPage({ initialMode = "login" }) {
     setErrorMsg("")
 
     try {
-      const data = await registrarUsuario({
-        nombre,
-        correo,
-        carrera,
-        estado_geografico,
-        municipio,
-        password,
-      })
+      const [data] = await Promise.all([
+        registrarUsuario({ nombre, correo, carrera, estado_geografico, municipio, password }),
+        new Promise((resolve) => setTimeout(resolve, SIGNUP_MIN_MS)),
+      ])
 
       sessionStorage.setItem("access_token", data.access_token)
       sessionStorage.setItem("usuario", JSON.stringify(data.usuario))
@@ -67,16 +66,12 @@ export default function AuthPage({ initialMode = "login" }) {
         </Link>
       </header>
       <main className="flex flex-1 flex-col items-center justify-center gap-6 px-4 py-10">
-        {errorMsg && (
-          <div className="w-full max-w-md rounded-lg border border-red-500/20 bg-red-500/10 p-3 text-center text-sm font-medium text-red-500">
-            {errorMsg}
-          </div>
-        )}
         <AuthCard
           loading={loading}
           initialMode={initialMode}
           onSignIn={signIn}
           onSignUp={signUp}
+          error={errorMsg}
         />
         <LocalProcessing />
       </main>

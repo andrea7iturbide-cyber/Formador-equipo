@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react"
 import { Link } from "react-router-dom"
-import { FolderOpen, Plus, SearchX } from "lucide-react"
+import { FolderOpen, Lightbulb, Plus, SearchX } from "lucide-react"
+import PageHeader from "../components/layout/PageHeader"
 import Button from "../components/ui/Button"
 import { Segmented, Tabs } from "../components/ui/Controls"
 import { EmptyState, ErrorState, Skeleton } from "../components/ui/Feedback"
@@ -36,15 +37,19 @@ export default function ProjectsPage() {
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-6 sm:px-8 sm:py-10">
-      <header className="mb-6 flex animate-fade-up flex-wrap items-end justify-between gap-4">
-        <div>
-          <h1 className="text-h1 font-bold">Proyectos</h1>
-          <p className="mt-1 text-ink-2">Encuentra un proyecto donde lo que sabes hacer sea justo lo que falta.</p>
-        </div>
-        <Button as={Link} to="/proyectos/nuevo">
-          <Plus aria-hidden="true" className="size-4" /> Crear proyecto
-        </Button>
-      </header>
+      <PageHeader
+        icon={Lightbulb}
+        tone="violeta"
+        eyebrow="Proyectos"
+        title="Encuentra dónde"
+        accent="encajas"
+        desc="Proyectos donde lo que sabes hacer es justo lo que falta."
+        actions={
+          <Button as={Link} to="/proyectos/nuevo">
+            <Plus aria-hidden="true" className="size-4" /> Crear proyecto
+          </Button>
+        }
+      />
 
       <Tabs
         label="Proyectos"

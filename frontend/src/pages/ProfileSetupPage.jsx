@@ -66,7 +66,7 @@ function AvailabilityStep({ value, onChange, error }) {
 
 /* -------------------------- Paso 3: revisión -------------------------- */
 
-const ANALYSIS_MESSAGES = ["Leyendo tus respuestas…", "Identificando tus habilidades…", "Organizando tu perfil…"]
+const ANALYSIS_STEPS = ["Leyendo tus respuestas", "Identificando tus habilidades", "Detectando tus intereses", "Organizando tu perfil"]
 function ReviewBlock({ title, desc, badge, children }) {
   return (
     <Card className="animate-fade-up p-5">
@@ -91,13 +91,11 @@ function summarize(blocks) {
 
 function ReviewStep({ textos, disponibilidad, perfil, setPerfil, onEditAvailability, consent, setConsent }) {
   const [state, setState] = useState(perfil ? "ready" : "loading")
-  const [msg, setMsg] = useState(0)
   const [attempt, setAttempt] = useState(0)
 
   useEffect(() => {
     if (perfil) return
     let alive = true
-    const timer = setInterval(() => setMsg((m) => Math.min(m + 1, ANALYSIS_MESSAGES.length - 1)), 750)
     interpretarPerfil(textos)
       .then((p) => {
         if (!alive) return
@@ -105,17 +103,15 @@ function ReviewStep({ textos, disponibilidad, perfil, setPerfil, onEditAvailabil
         setState("ready")
       })
       .catch(() => alive && setState("error"))
-      .finally(() => clearInterval(timer))
     return () => {
       alive = false
-      clearInterval(timer)
     }
   }, [attempt, perfil, textos, setPerfil])
 
   if (state === "loading") {
     return (
       <div className="space-y-4" aria-busy="true">
-        <AILoading text={`La IA está analizando tu perfil… ${ANALYSIS_MESSAGES[msg]}`} />
+        <AILoading text="La IA está analizando tu perfil" steps={ANALYSIS_STEPS} />
         <LocalProcessing />
         <Button variant="secondary" onClick={() => {
           setPerfil({ fortalezas: [], reforzar: [], intereses: [], experiencia: [], resumen_publico: "" })
@@ -139,7 +135,7 @@ function ReviewStep({ textos, disponibilidad, perfil, setPerfil, onEditAvailabil
     return (
       <div className="space-y-3">
         <ErrorState message="No pudimos analizar tu perfil. Tus respuestas siguen guardadas."
-          onRetry={() => { setState("loading"); setMsg(0); setAttempt((a) => a + 1) }} />
+          onRetry={() => { setState("loading"); setAttempt((a) => a + 1) }} />
         <Button variant="secondary" onClick={() => {
           setPerfil({ fortalezas: [], reforzar: [], intereses: [], experiencia: [], resumen_publico: "" })
           setState("ready")
@@ -249,7 +245,7 @@ function Done({ consent }) {
       <span className="grid size-20 animate-pop place-items-center rounded-full bg-success-soft">
         <CircleCheck aria-hidden="true" className="size-10 text-success" />
       </span>
-      <h1 className="mt-6 text-h1 font-bold">{consent ? "¡Tu perfil está listo!" : "Perfil guardado sin recomendaciones"}</h1>
+      <h1 className="mt-6 text-h1 font-extrabold">{consent ? "¡Tu perfil está listo!" : "Perfil guardado sin recomendaciones"}</h1>
       <p className="mt-2 max-w-md text-ink-2">
         Tu perfil confirmado está guardado. Ya puedes explorar personas y proyectos.
       </p>
@@ -399,7 +395,7 @@ export default function ProfileSetupPage() {
               {step === 2 && (
                 <div className="space-y-6">
                   <div>
-                    <h1 className="text-h1 font-bold">Revisa tu perfil</h1>
+                    <h1 className="text-h1 font-extrabold">Revisa tu perfil</h1>
                     <p className="mt-1 text-ink-2">Tú decides qué queda. Todo se puede editar más adelante desde tu perfil.</p>
                   </div>
                   <ReviewStep

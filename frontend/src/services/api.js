@@ -22,16 +22,22 @@ function interpretOnce(path, body) {
   return pending
 }
 
+// `npm run dev:mock`: respuestas simuladas para revisar el diseño sin backend ni base de datos.
+const MOCK = import.meta.env.MODE === "mock"
+
 // Cliente HTTP conectado a tu backend local
 async function request(path, { method = "GET", body, idempotencyKey } = {}) {
+  if (MOCK) return import("../mocks/backend.js").then(({ mockRequest }) => mockRequest(path, { method, body }))
   const token = sessionStorage.getItem("access_token")
   const res = await fetch(`${API_URL}${path}`, {
     method,
     headers: { "Content-Type": "application/json", ...(token ? { Authorization: `Bearer ${token}` } : {}),
       ...(idempotencyKey ? { "Idempotency-Key": idempotencyKey } : {}) },
     body: body ? JSON.stringify(body) : undefined,
+  }).catch(() => {
+    throw new Error("No pudimos conectar con el servidor. Revisa tu conexión o inténtalo en unos minutos.")
   })
-  
+
   if (!res.ok) {
     if (res.status === 401 && !path.startsWith("/auth/")) {
       sessionStorage.removeItem("access_token")

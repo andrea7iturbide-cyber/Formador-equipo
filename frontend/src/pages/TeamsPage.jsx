@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom"
-import { Inbox, Plus, Users } from "lucide-react"
+import { Inbox, Plus, Users, UsersRound } from "lucide-react"
+import PageHeader from "../components/layout/PageHeader"
 import Button from "../components/ui/Button"
 import { EmptyState, ErrorState, Skeleton } from "../components/ui/Feedback"
 import TeamSummaryCard from "../components/team/TeamSummaryCard"
@@ -11,18 +12,22 @@ export default function TeamsPage() {
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-6 sm:px-8 sm:py-10">
-      <header className="mb-6 flex animate-fade-up flex-wrap items-end justify-between gap-4">
-        <div>
-          <h1 className="text-h1 font-bold">Mis equipos</h1>
-          <p className="mt-1 text-ink-2">Quién aporta qué en cada equipo y qué falta por cubrir.</p>
-        </div>
-        <Button variant="secondary" as={Link} to="/invitaciones">
-          <Inbox aria-hidden="true" className="size-4" /> Invitaciones
-        </Button>
-      </header>
+      <PageHeader
+        icon={UsersRound}
+        tone="verde"
+        eyebrow="Tu colaboración"
+        title="Mis"
+        accent="equipos"
+        desc="Quién aporta qué en cada equipo y qué falta por cubrir."
+        actions={
+          <Button variant="secondary" as={Link} to="/invitaciones">
+            <Inbox aria-hidden="true" className="size-4" /> Invitaciones
+          </Button>
+        }
+      />
 
       {status === "loading" ? (
-        <div className="grid gap-4 md:grid-cols-2">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <Skeleton className="h-40 rounded-xl" />
           <Skeleton className="h-40 rounded-xl" />
         </div>
@@ -46,7 +51,7 @@ export default function TeamsPage() {
           Únete a un proyecto o crea el tuyo; te ayudaremos a encontrar a quién le falta.
         </EmptyState>
       ) : (
-        <ul className="grid gap-4 md:grid-cols-2">
+        <ul className="grid grid-cols-1 gap-4 md:grid-cols-2">
           {data.map((t, i) => (
             <li key={t.id} className="animate-fade-up" style={{ animationDelay: `${i * 60}ms` }}>
               <TeamSummaryCard team={t} project={t.proyecto} />

@@ -29,7 +29,7 @@ export default function TeamCoverageChart({ coverage }) {
           />
         </svg>
         <figcaption className="absolute text-center">
-          <span className="block text-h1 font-bold">
+          <span className="block text-h1 font-extrabold">
             {total ? `${cubiertas.length}/${total}` : "—"}
           </span>
           <span className="text-xs text-ink-2">{unknown ? "Desconocida" : "habilidades"}</span>

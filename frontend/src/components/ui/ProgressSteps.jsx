@@ -25,7 +25,7 @@ export default function ProgressSteps({ steps, current }) {
           return (
             <li key={s} className="flex flex-1 items-center gap-2 text-sm" aria-current={active ? "step" : undefined}>
               <span
-                className={`grid size-6 shrink-0 place-items-center rounded-full text-xs font-bold transition-colors ${
+                className={`grid size-6 shrink-0 place-items-center rounded-full text-xs font-semibold transition-colors ${
                   done ? "bg-success text-white" : active ? "bg-primary text-white" : "bg-surface-2 text-ink-2"
                 }`}
               >

@@ -15,17 +15,28 @@ const NAV = [
   { to: "/perfil", label: "Perfil", icon: UserRound },
 ]
 
+/*
+ * Símbolo de Comple-team: una C violeta (la marca) abierta, y la pieza turquesa
+ * (la IA) que cierra el hueco. C + la pieza que faltaba = un círculo completo.
+ * La misma geometría está en public/favicon.svg.
+ */
+export function LogoMark({ className = "size-8" }) {
+  return (
+    <svg viewBox="0 0 32 32" aria-hidden="true" className={`shrink-0 ${className}`}>
+      <rect width="32" height="32" rx="9" fill="#17152f" />
+      <path d="M21.66 10.34A8 8 0 1 0 21.66 21.66" fill="none" stroke="#8b7cf6" strokeWidth="4.2" strokeLinecap="round" />
+      <circle cx="24.4" cy="16" r="2.6" fill="#36cfc9" />
+    </svg>
+  )
+}
+
 export function Logo({ to = "/inicio", className = "" }) {
   return (
-    <Link to={to} className={`group flex items-center gap-2 font-bold text-ink ${className}`}>
-      <span aria-hidden="true" className="grid size-8 place-items-center rounded-lg bg-linear-to-br from-primary to-accent text-white shadow-sm shadow-primary/30 transition-transform duration-200 group-hover:scale-105">
-        {/* Dos piezas distintas que encajan: la idea de complementariedad */}
-        <svg viewBox="0 0 20 20" className="size-4" fill="currentColor">
-          <path d="M3 3h7v7H3z" opacity=".55" />
-          <path d="M10 10h7v7h-7zM10 3h7v7h-7z" />
-        </svg>
+    <Link to={to} aria-label="Comple-team, ir al inicio" className={`group flex items-center gap-2 ${className}`}>
+      <LogoMark className="size-8 shadow-sm shadow-primary/25 transition-transform duration-300 group-hover:rotate-[-8deg] group-hover:scale-105" />
+      <span aria-hidden="true" className="text-[1.05rem] font-extrabold tracking-tight text-ink">
+        Comple<span className="text-ink-2">-</span><span className="text-primary">team</span>
       </span>
-      Complementa
     </Link>
   )
 }
@@ -190,7 +201,7 @@ function BottomItem({ to, label, short, icon: Icon }) {
       <NavLink
         to={to}
         className={({ isActive }) =>
-          `relative flex min-h-14 flex-col items-center justify-center gap-0.5 text-[11px] font-medium transition-colors ${
+          `relative flex min-h-14 flex-col items-center justify-center gap-0.5 text-label font-medium transition-colors ${
             isActive ? "text-primary" : "text-ink-2"
           }`
         }

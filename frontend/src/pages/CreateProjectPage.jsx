@@ -29,7 +29,7 @@ function Stepper({ value, onChange, min = 2, max = 8, id }) {
       >
         <Minus aria-hidden="true" className="size-4" />
       </button>
-      <output id={id} aria-live="polite" className="w-10 text-center text-h2 font-semibold">
+      <output id={id} aria-live="polite" className="w-10 text-center text-h2 font-extrabold">
         {value}
       </output>
       <button
@@ -151,7 +151,7 @@ function RoleCard({ role, index, onChange, onRemove }) {
       </div>
 
       <div className="mt-3 px-2">
-        <p className="mb-2 text-label font-semibold tracking-wide text-ink-2 uppercase">Habilidades que necesita</p>
+        <p className="eyebrow mb-2 text-ink-2">Habilidades que necesita</p>
         <TagEditor
           items={role.habilidades}
           onChange={(h) => onChange({ ...role, habilidades: h })}
@@ -175,6 +175,8 @@ function RoleCard({ role, index, onChange, onRemove }) {
     </li>
   )
 }
+
+const ROLE_STEPS = ["Leyendo la descripción", "Detectando habilidades necesarias", "Proponiendo roles para tu equipo"]
 
 function RolesStep({ form, roles, setRoles, requirements, setRequirements, suggestedByAi, setSuggestedByAi }) {
   const [state, setState] = useState(roles ? "ready" : "loading")
@@ -202,7 +204,7 @@ function RolesStep({ form, roles, setRoles, requirements, setRequirements, sugge
   if (state === "loading") {
     return (
       <div className="space-y-4" aria-busy="true">
-        <AILoading text="La IA está identificando los roles que necesita tu proyecto…" />
+        <AILoading text="La IA está identificando los roles de tu proyecto" steps={ROLE_STEPS} />
         <Button variant="secondary" onClick={() => {
           setRequirements({ habilidades_obligatorias: [], habilidades_deseables: [],
             intereses_relacionados: [], restricciones_explicitas: [],
@@ -371,7 +373,7 @@ export default function CreateProjectPage() {
         <span className="grid size-20 animate-pop place-items-center rounded-full bg-success-soft">
           <Rocket aria-hidden="true" className="size-9 text-success" />
         </span>
-        <h1 className="mt-6 text-h1 font-bold">¡Tu proyecto está publicado!</h1>
+        <h1 className="mt-6 text-h1 font-extrabold">¡Tu proyecto está publicado!</h1>
         <p className="mt-2 text-ink-2">
           El proyecto está publicado con los roles y requisitos que confirmaste.
         </p>
@@ -393,7 +395,7 @@ export default function CreateProjectPage() {
         <ArrowLeft aria-hidden="true" className="size-4" /> Proyectos
       </Link>
       <div className="mb-6 flex flex-wrap items-center justify-between gap-2">
-        <h1 className="text-h1 font-bold">Crear proyecto</h1>
+        <h1 className="text-h1 font-extrabold">Crear proyecto</h1>
         {step === 1 && suggestedByAi && <AIBadge label="Roles propuestos por IA" />}
       </div>
       <div className="mb-8">

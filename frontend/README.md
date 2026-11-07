@@ -1,4 +1,4 @@
-# Frontend de Complementa
+# Frontend de Comple-team
 
 Cliente React + Vite de la plataforma de formación de equipos. Consume FastAPI para autenticación, perfiles revisados, proyectos, recomendaciones, invitaciones y equipos.
 

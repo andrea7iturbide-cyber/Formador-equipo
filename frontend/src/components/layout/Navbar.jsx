@@ -6,6 +6,7 @@ import { Logo } from "./AppLayout"
 const LINKS = [
   ["#como-funciona", "Cómo funciona"],
   ["#estudiantes", "Estudiantes"],
+  ["#proyectos", "Proyectos"],
   ["#por-que", "Por qué complementar"],
   ["#para-quien", "Para quién es"],
 ]
@@ -15,7 +16,7 @@ export default function Navbar({ onGetStarted }) {
   const [open, setOpen] = useState(false)
 
   return (
-    <header className="sticky top-0 z-30 animate-fade-in border-b border-line/70 bg-canvas/75 backdrop-blur-md">
+    <header className="sticky top-0 z-30 animate-fade-in border-b border-line/70 bg-canvas/90 backdrop-blur-xl backdrop-saturate-150">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4 sm:px-8">
         <Logo to="/" />
 
@@ -31,7 +32,10 @@ export default function Navbar({ onGetStarted }) {
           <Button variant="ghost" as={Link} to="/auth" className="max-sm:hidden">
             Iniciar sesión
           </Button>
-          <Button onClick={onGetStarted}>Crear mi perfil</Button>
+          <Button onClick={onGetStarted} className="max-sm:px-3">
+            <span className="max-[400px]:hidden">Crear mi perfil</span>
+            <span className="min-[401px]:hidden">Registrarme</span>
+          </Button>
           <button
             type="button"
             onClick={() => setOpen((o) => !o)}

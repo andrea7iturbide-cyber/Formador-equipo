@@ -11,7 +11,7 @@ const DEFAULT_VIS = { fortalezas: true, intereses: true, disponibilidad: true, r
 function Block({ title, children }) {
   return (
     <section>
-      <h3 className="mb-3 text-label font-semibold tracking-wide text-ink-2 uppercase">{title}</h3>
+      <h3 className="eyebrow mb-3 text-ink-2">{title}</h3>
       {children}
     </section>
   )
@@ -44,7 +44,7 @@ export default function PublicProfile({ student, preview = false, actions, viewe
           <div className="flex items-end gap-4">
             <Avatar name={student.nombre} size="xl" ring />
             <div className="pb-1">
-              <h2 className="text-h2 font-bold">{student.nombre}</h2>
+              <h2 className="text-h2 font-extrabold">{student.nombre}</h2>
               <p className="text-sm text-ink-2">
                 {student.carrera} · {student.semestre}.º semestre
               </p>
@@ -55,7 +55,7 @@ export default function PublicProfile({ student, preview = false, actions, viewe
 
         {student.bio && (
           <section className="mt-6">
-            <h3 className="mb-2 text-label font-semibold tracking-wide text-ink-2 uppercase">Acerca de mí</h3>
+            <h3 className="eyebrow mb-2 text-ink-2">Acerca de mí</h3>
             <p className="whitespace-pre-wrap text-sm text-ink">{student.bio}</p>
           </section>
         )}

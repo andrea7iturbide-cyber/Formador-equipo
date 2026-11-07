@@ -7,7 +7,7 @@ import { EmptyState } from "../components/ui/Feedback"
 export default function PlaceholderPage({ title }) {
   return (
     <div className="mx-auto max-w-3xl px-4 py-10 sm:px-8">
-      <h1 className="mb-6 text-h1 font-bold">{title}</h1>
+      <h1 className="mb-6 text-h1 font-extrabold">{title}</h1>
       <EmptyState
         icon={Hammer}
         title="Esta sección está en construcción"

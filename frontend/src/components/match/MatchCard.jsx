@@ -15,7 +15,7 @@ export default function MatchCard({ student, rol, rec, invited = false, onInvite
   return (
     <article className="w-full max-w-md animate-scale-in rounded-3xl border border-line bg-surface p-6 text-center shadow-pop sm:p-8">
       <Avatar name={student.nombre} size="xl" className="mx-auto ring-4 ring-surface-2" />
-      <h2 className="mt-4 text-h2 font-bold text-ink">{student.nombre}</h2>
+      <h2 className="mt-4 text-h2 font-extrabold text-ink">{student.nombre}</h2>
       <p className="text-sm text-ink-2">
         {student.carrera} · {student.semestre}.º semestre
       </p>

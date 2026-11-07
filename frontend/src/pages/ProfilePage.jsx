@@ -1,6 +1,7 @@
 import { useId, useState, useEffect } from "react"
 import { Link, useNavigate, useParams } from "react-router-dom"
-import { ArrowLeft, Eye, Lock, Pencil, RefreshCw, Send, UserX } from "lucide-react"
+import { ArrowLeft, Eye, Lock, Pencil, RefreshCw, Send, UserRound, UserX } from "lucide-react"
+import PageHeader from "../components/layout/PageHeader"
 import Button from "../components/ui/Button"
 import Card from "../components/ui/Card"
 import TagEditor from "../components/ui/TagEditor"
@@ -261,11 +262,14 @@ function MyProfile() {
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-6 pb-32 sm:px-8 sm:py-10">
-      <header className="mb-6 flex animate-fade-up flex-wrap items-end justify-between gap-4">
-        <div>
-          <h1 className="text-h1 font-bold">Mi perfil</h1>
-          <p className="mt-1 text-ink-2">Tú decides qué se muestra y qué usa la IA.</p>
-        </div>
+      <PageHeader
+        icon={UserRound}
+        tone="violeta"
+        eyebrow="Tu perfil"
+        title="Lo que"
+        accent="aportas"
+        desc="Tú decides qué se muestra y qué usa la IA."
+        actions={
         <Segmented
           label="Modo de vista"
           value={mode}
@@ -275,7 +279,8 @@ function MyProfile() {
             ["publica", <span key="p" className="flex items-center gap-1.5"><Eye className="size-4" /> Ver como otros me ven</span>],
           ]}
         />
-      </header>
+        }
+      />
 
       <div className="mb-5 space-y-3">
         <RecommendationConsentStatus consent={saved.consentimiento_recomendaciones} paused={saved.pausado}

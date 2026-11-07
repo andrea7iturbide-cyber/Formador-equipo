@@ -1,4 +1,5 @@
-import { BellOff } from "lucide-react"
+import { Bell, BellOff } from "lucide-react"
+import PageHeader from "../components/layout/PageHeader"
 import { EmptyState, ErrorState, Skeleton } from "../components/ui/Feedback"
 import NotificationItem from "../components/notification/NotificationItem"
 import useAsync from "../hooks/useAsync"
@@ -16,12 +17,14 @@ export default function NotificationsPage() {
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-6 sm:px-8 sm:py-10">
-      <header className="mb-8 flex animate-fade-up flex-wrap items-end justify-between gap-4">
-        <div>
-          <h1 className="text-h1 font-bold">Notificaciones</h1>
-          <p className="mt-1 text-ink-2">Invitaciones, recomendaciones y actividad real de tus equipos.</p>
-        </div>
-      </header>
+      <PageHeader
+        icon={Bell}
+        tone="turquesa"
+        eyebrow="Notificaciones"
+        title="Lo nuevo"
+        accent="para ti"
+        desc="Invitaciones, recomendaciones y actividad real de tus equipos."
+      />
 
       {notifications.loading ? (
         <div className="space-y-3" aria-busy="true">
@@ -40,7 +43,7 @@ export default function NotificationsPage() {
             if (!list.length) return null
             return (
               <section key={key} aria-labelledby={`g-${key}`}>
-                <h2 id={`g-${key}`} className="mb-2 text-label font-semibold tracking-wide text-ink-2 uppercase">
+                <h2 id={`g-${key}`} className="eyebrow mb-2 text-ink-2">
                   {label}
                 </h2>
                 <ul className="divide-y divide-line overflow-hidden rounded-2xl border border-line bg-surface shadow-card">

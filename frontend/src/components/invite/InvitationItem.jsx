@@ -55,9 +55,15 @@ export default function InvitationItem({ invitation, person, project, onRespond,
   }
 
   return (
-    <li className="flex animate-fade-up flex-col gap-3 rounded-xl border border-line bg-surface p-4 transition-colors">
+    <li
+      className={`relative flex animate-fade-up flex-col gap-3 overflow-hidden rounded-2xl border bg-surface p-5 pl-6 shadow-card transition-all duration-300 ${
+        canRespond ? "border-highlight/60 hover:shadow-pop" : "border-line"
+      }`}
+    >
+      {/* Ámbar = te buscan y espera tu respuesta */}
+      <span aria-hidden="true" className={`absolute inset-y-0 left-0 w-1.5 ${canRespond ? "bg-linear-to-b from-highlight to-[#f08a3e]" : "bg-line"}`} />
       <div className="flex items-start gap-3">
-        <Avatar name={nombrePersona} size="sm" />
+        <Avatar name={nombrePersona} size="md" />
         <div className="min-w-0 flex-1">
           <p className="text-sm text-ink">
             {solicitudUnirse && recibida ? (
@@ -81,7 +87,11 @@ export default function InvitationItem({ invitation, person, project, onRespond,
               </>
             )}
           </p>
-          {rol && <p className="mt-0.5 text-xs text-ink-2">Rol: {rol}</p>}
+          {rol && (
+            <p className={`mt-1.5 inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold ${canRespond ? "bg-highlight-soft text-highlight-ink" : "bg-surface-2 text-ink-2"}`}>
+              Rol: {rol}
+            </p>
+          )}
         </div>
         {!canRespond && <StatusBadge estado={estado} />}
       </div>
@@ -96,7 +106,9 @@ export default function InvitationItem({ invitation, person, project, onRespond,
           <Eye aria-hidden="true" className="size-4" /> Ver perfil
         </Button>
       )}
-      {mensaje && !compact && <p className="rounded-lg bg-surface-2 p-3 text-sm text-ink-2 italic">“{mensaje}”</p>}
+      {mensaje && !compact && (
+        <p className="rounded-xl rounded-tl-sm border-l-4 border-primary/60 bg-primary-soft p-3 text-sm text-ink italic">“{mensaje}”</p>
+      )}
       {canRespond && (
         <div className="flex gap-2">
           <Button size="sm" className="flex-1" disabled={busy} onClick={() => onRespond("aceptada")}>

@@ -19,7 +19,7 @@ export default function Carousel({ label, children }) {
     <div className="relative" role="region" aria-roledescription="carrusel" aria-label={label}>
       <div
         ref={ref}
-        className="-mx-4 flex snap-x snap-mandatory scroll-px-4 gap-4 overflow-x-auto px-4 pt-1 pb-3 [scrollbar-width:none] sm:mx-0 sm:scroll-px-0 sm:px-0 [&::-webkit-scrollbar]:hidden"
+        className="-mx-4 flex snap-x snap-mandatory scroll-px-4 gap-4 overflow-x-auto px-4 pt-1 pb-3 scrollbar-none sm:mx-0 sm:scroll-px-0 sm:px-0 [&::-webkit-scrollbar]:hidden"
       >
         {children}
       </div>
@@ -35,8 +35,8 @@ export default function Carousel({ label, children }) {
   )
 }
 
-export function CarouselItem({ children }) {
-  return <div className="w-full shrink-0 snap-start sm:w-[calc((100%-1rem)/2)]">{children}</div>
+export function CarouselItem({ className = "", children }) {
+  return <div className={`w-full shrink-0 snap-start sm:w-[calc((100%-1rem)/2)] ${className}`}>{children}</div>
 }
 
 function ArrowButton({ onClick, label, children }) {

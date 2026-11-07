@@ -113,7 +113,7 @@ export default function ScheduleMeetingModal({ open = true, inline = false, name
             <CalendarClock aria-hidden="true" className="size-5" />
           </span>
           <div>
-            <h1 className="text-h2 font-semibold">Proponer reunión</h1>
+            <h1 className="text-h2 font-extrabold">Proponer reunión</h1>
             <p className="text-sm text-ink-2">El equipo recibirá la propuesta como notificación.</p>
           </div>
         </header>

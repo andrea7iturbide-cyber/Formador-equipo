@@ -4,7 +4,7 @@ import { Cpu, ShieldCheck } from "lucide-react"
 export default function AIBadge({ label = "Sugerido por IA", className = "" }) {
   return (
     <span
-      className={`inline-flex items-center gap-1 rounded-md border border-ai-line bg-ai-soft px-1.5 py-0.5 text-[11px] font-semibold text-ai-ink ${className}`}
+      className={`inline-flex items-center gap-1 rounded-md border border-ai-line bg-ai-soft px-1.5 py-0.5 text-label font-semibold text-ai-ink ${className}`}
     >
       <Cpu aria-hidden="true" className="size-3" strokeWidth={2.25} />
       {label}

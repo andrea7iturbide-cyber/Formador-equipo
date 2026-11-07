@@ -21,13 +21,14 @@ const PALETTE = [
 ]
 
 const TYPE = [
-  { cls: "text-display font-extrabold", label: "Display · 40/46 · ExtraBold", sample: "Equipos que se complementan" },
-  { cls: "text-h1 font-bold", label: "H1 · 28/36 · Bold", sample: "Recomendado para ti" },
-  { cls: "text-h2 font-semibold", label: "H2 · 20/28 · Semibold", sample: "Mapa de cobertura de roles" },
-  { cls: "text-h3 font-semibold", label: "H3 · 16/24 · Semibold", sample: "Ana Torres" },
-  { cls: "text-body", label: "Cuerpo · 15/24 · Regular", sample: "Cada integrante aporta algo distinto al proyecto." },
+  { cls: "text-display font-extrabold", label: "Display · 40→56 px fluido · ExtraBold", sample: "Equipos que se complementan" },
+  { cls: "text-h1 font-extrabold", label: "H1 · 30→44 px fluido · ExtraBold", sample: "Encuentra dónde encajas" },
+  { cls: "text-h2 font-extrabold", label: "H2 · 24/32 · ExtraBold", sample: "3 roles abiertos" },
+  { cls: "text-h3 font-semibold", label: "H3 · 18/26 · Semibold", sample: "Ana Torres" },
+  { cls: "text-body", label: "Lectura · 16/26 · Regular", sample: "Cada integrante aporta algo distinto al proyecto." },
   { cls: "text-sm text-ink-2", label: "Secundario · 14/20", sample: "Diseño Gráfico · 5.º semestre" },
-  { cls: "text-label font-semibold uppercase tracking-wide text-ink-2", label: "Etiqueta · 12/16 · Semibold", sample: "Aporta" },
+  { cls: "text-xs text-ink-2", label: "Mínimo · 13/18 (chips, fechas, contadores)", sample: "3/4 integrantes · 28 nov" },
+  { cls: "eyebrow text-ink-2", label: "Etiqueta · 12/16 · ExtraBold · mayúsculas", sample: "Aporta" },
 ]
 
 const NAV = [
@@ -42,7 +43,7 @@ function Section({ title, desc, children }) {
   return (
     <section className="animate-fade-up space-y-4">
       <div>
-        <h2 className="text-h2 font-semibold">{title}</h2>
+        <h2 className="text-h2 font-extrabold">{title}</h2>
         {desc && <p className="text-sm text-ink-2">{desc}</p>}
       </div>
       {children}
@@ -68,8 +69,8 @@ export default function DesignSystemPage() {
     <div className="mx-auto max-w-6xl space-y-14 px-4 py-10 sm:px-8">
       <header className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <p className="text-label font-semibold tracking-wide text-primary uppercase">Complementa · v0.1</p>
-          <h1 className="text-h1 font-bold sm:text-display sm:font-extrabold">Sistema de diseño</h1>
+          <p className="eyebrow text-primary">Comple-team · v0.1</p>
+          <h1 className="text-h1 font-extrabold sm:text-display sm:font-extrabold">Sistema de diseño</h1>
           <p className="mt-1 max-w-xl text-ink-2">
             Base visual para formar equipos complementarios: limpia, clara y con la IA presente de forma discreta.
           </p>
@@ -87,7 +88,7 @@ export default function DesignSystemPage() {
               <div className={`h-16 ${c.cls}`} />
               <div className="space-y-0.5 p-3">
                 <p className="text-sm font-semibold">{c.name}</p>
-                <p className="font-mono text-[11px] text-ink-2">{c.hex}</p>
+                <p className="font-mono text-label text-ink-2">{c.hex}</p>
                 <p className="text-xs text-ink-2">{c.use}</p>
               </div>
             </Card>
@@ -230,7 +231,7 @@ export default function DesignSystemPage() {
                   <p className="mb-2 flex items-center gap-2 font-semibold">
                     <Icon aria-hidden="true" className="size-4 text-ink-2" />
                     {label}
-                    {badge && <span className="rounded-full bg-primary px-1.5 text-[11px] font-bold text-white">{badge}</span>}
+                    {badge && <span className="rounded-full bg-primary px-1.5 text-label font-semibold text-white">{badge}</span>}
                   </p>
                   <ul className="space-y-1 text-sm text-ink-2">
                     {children.map((c) => (
@@ -271,7 +272,7 @@ export default function DesignSystemPage() {
                       </span>
                     </span>
                   ) : (
-                    <span key={l} className={`flex flex-col items-center gap-0.5 py-1 text-[10px] font-medium ${active ? "text-primary" : "text-ink-2"}`}>
+                    <span key={l} className={`flex flex-col items-center gap-0.5 py-1 text-label font-medium ${active ? "text-primary" : "text-ink-2"}`}>
                       <Icon aria-hidden="true" className="size-5" />
                       {l}
                     </span>

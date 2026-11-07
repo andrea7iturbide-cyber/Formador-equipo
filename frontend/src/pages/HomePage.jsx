@@ -8,6 +8,7 @@ import { CardSkeleton, EmptyState, ErrorState, Skeleton } from "../components/ui
 import Carousel, { CarouselItem } from "../components/ui/Carousel"
 import SkillChip from "../components/ui/SkillChip"
 import TeamSummaryCard from "../components/team/TeamSummaryCard"
+import WelcomeHero from "../components/home/WelcomeHero"
 import StudentSearch from "../components/search/StudentSearch"
 import RecommendationConsentStatus from "../components/profile/RecommendationConsentStatus"
 import useAsync from "../hooks/useAsync"
@@ -31,7 +32,7 @@ function SectionHeader({ title, desc, action, id }) {
   return (
     <div className="mb-4 flex flex-wrap items-end justify-between gap-2">
       <div>
-        <h2 id={id} className="text-h2 font-semibold text-ink">
+        <h2 id={id} className="text-h2 font-extrabold text-ink">
           {title}
         </h2>
         {desc && <p className="text-sm text-ink-2">{desc}</p>}
@@ -76,7 +77,7 @@ export function ProfileProgress({ value, status }) {
             className="stroke-primary transition-[stroke-dashoffset] duration-1000 ease-out"
           />
         </svg>
-        <span className="absolute text-xs font-bold">{value === null ? "—" : `${value}%`}</span>
+        <span className="absolute text-xs font-semibold">{value === null ? "—" : `${value}%`}</span>
       </div>
       <div className="min-w-0 flex-1">
         <p className="font-semibold text-ink">{message}</p>
@@ -176,12 +177,12 @@ function Recommendations({ onState }) {
               <Card interactive className="group flex h-full animate-fade-up flex-col justify-between p-6 shadow-sm" style={{ animationDelay: `${i * 90}ms` }}>
                 <div>
                   <div className="flex items-center justify-between gap-2">
-                    <span className="rounded-md bg-primary/10 px-2.5 py-1 text-xs font-semibold text-primary uppercase tracking-wider">
+                    <span className="eyebrow rounded-md bg-primary/10 px-2.5 py-1 text-primary">
                       {proyecto?.tipo || "Proyecto"}
                     </span>
                     <span className="text-xs text-ink-2">{rec.eligibility === "needs_review" ? "Requiere revisión" : "Elegible por evidencias"}</span>
                   </div>
-                  <h3 className="mt-3 text-lg font-bold text-ink">{proyecto?.titulo || `Proyecto ${rec.event_id}`}</h3>
+                  <h3 className="mt-3 text-lg font-semibold text-ink">{proyecto?.titulo || `Proyecto ${rec.event_id}`}</h3>
                   <p className="mt-1 text-xs text-ink-2">{proyecto?.acepta_participacion ? "Con vacantes de rol" : proyecto?.motivo_no_disponible || "Disponibilidad por verificar"}</p>
                   <p className="mt-2 line-clamp-3 text-sm text-ink-2">{rec.explanation.strengths[0] || rec.explanation.unknowns[0] || "Revisa los requisitos del proyecto."}</p>
                 </div>
@@ -259,7 +260,7 @@ function ProjectsFeed() {
             >
               <div>
                 <div className="flex items-center justify-between gap-2">
-                  <span className="rounded-md bg-primary-soft px-2.5 py-1 text-xs font-semibold tracking-wider text-primary uppercase">
+                  <span className="eyebrow rounded-md bg-primary-soft px-2.5 py-1 text-primary">
                     {TIPO[p.tipo] ?? "Proyecto"}
                   </span>
                   {p.acepta_participacion ? (
@@ -273,7 +274,7 @@ function ProjectsFeed() {
                     <span className="text-xs text-ink-2">{p.soy_integrante ? "Ya participas" : "Sin vacantes"}</span>
                   )}
                 </div>
-                <h3 className="mt-3 line-clamp-2 text-lg font-bold text-ink">{p.titulo}</h3>
+                <h3 className="mt-3 line-clamp-2 text-lg font-semibold text-ink">{p.titulo}</h3>
                 {p.creadorNombre && <p className="mt-0.5 text-xs text-ink-2">Publicado por {p.creadorNombre}</p>}
                 {p.descripcion && <p className="mt-2 line-clamp-2 text-sm text-ink-2">{p.descripcion}</p>}
                 {buscan.length > 0 && (
@@ -357,19 +358,7 @@ export default function HomePage() {
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-6 sm:px-8 sm:py-10">
-      <header className="mb-6 flex animate-fade-up flex-wrap items-end justify-between gap-4">
-        <div>
-          <h1 className="text-h1 font-bold text-ink">
-            {greeting()}, {firstName(nombreReal)}
-          </h1>
-          <p className="mt-1 text-ink-2">Esto es lo que encontramos para ti hoy en la plataforma.</p>
-        </div>
-        <div className="flex items-center gap-2">
-          <Button as={Link} to="/proyectos/nuevo" className="max-lg:hidden">
-            <Plus aria-hidden="true" className="size-4" /> Crear proyecto
-          </Button>
-        </div>
-      </header>
+      <WelcomeHero saludo={greeting()} nombre={firstName(nombreReal)} />
 
       <section
         aria-labelledby="search-title"
@@ -383,7 +372,7 @@ export default function HomePage() {
         <StudentSearch />
       </section>
 
-      <div className="grid gap-8 xl:grid-cols-[minmax(0,1fr)_360px]">
+      <div className="grid grid-cols-1 gap-8 xl:grid-cols-[minmax(0,1fr)_360px]">
         <div className="flex min-w-0 flex-col gap-10">
           <div className="order-1 animate-fade-up [animation-delay:60ms]">
             <ProfileProgress value={progresoReal} status={perfilQuery.status} />

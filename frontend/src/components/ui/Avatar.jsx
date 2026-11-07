@@ -10,7 +10,7 @@ const TONES = [
   "bg-indigo-100 text-indigo-800",
 ]
 
-const SIZES = { xs: "size-6 text-[10px]", sm: "size-8 text-xs", md: "size-10 text-sm", lg: "size-14 text-lg", xl: "size-20 text-2xl" }
+const SIZES = { xs: "size-6 text-label", sm: "size-8 text-xs", md: "size-10 text-sm", lg: "size-14 text-lg", xl: "size-20 text-2xl" }
 
 function initials(name = "") {
   return name

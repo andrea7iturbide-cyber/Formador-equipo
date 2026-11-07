@@ -4,13 +4,16 @@ import Card from "../ui/Card"
 import { AIPanel } from "../ui/AIBadge"
 import { ComplementLevel } from "../recommendation/RecommendationCard"
 import { coverage, formatDate } from "../../lib/projects"
+import { projectCover } from "../../lib/projectCovers"
 
-export function TypeBadge({ tipo }) {
-  const labels = { academico: "Académico", personal: "Personal", deportivo: "Deportivo",
-    videojuegos: "Videojuegos", general: "General" }
+const TYPE_LABELS = { academico: "Académico", personal: "Personal", deportivo: "Deportivo",
+  videojuegos: "Videojuegos", general: "General" }
+
+export function TypeBadge({ tipo, bare = false }) {
+  if (bare) return <>{TYPE_LABELS[tipo] ?? tipo}</>
   return (
     <span className="rounded-md bg-surface-2 px-2 py-0.5 text-xs font-medium text-ink-2">
-      {labels[tipo] ?? tipo}
+      {TYPE_LABELS[tipo] ?? tipo}
     </span>
   )
 }
@@ -39,11 +42,29 @@ export function RoleDots({ roles }) {
 export default function ProjectCard({ project, suggestion, className = "" }) {
   const rol = suggestion && project.roles.find((r) => r.id === suggestion.rolId)
   return (
-    <Card interactive className={`relative flex flex-col gap-4 p-5 ${className}`}>
-      <div className="flex items-start justify-between gap-3">
-        <TypeBadge tipo={project.tipo} />
-        {suggestion && <ComplementLevel nivel={suggestion.nivel} />}
+    <Card interactive className={`group relative flex flex-col overflow-hidden ${className}`}>
+      {/* Portada ilustrativa de la categoría (decorativa) */}
+      <div className="relative aspect-video overflow-hidden bg-surface-2">
+        <img
+          src={projectCover(project)}
+          alt=""
+          loading="lazy"
+          decoding="async"
+          className="size-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+        />
+        <div aria-hidden="true" className="absolute inset-0 bg-linear-to-t from-stage/45 via-transparent to-transparent" />
+        <div className="absolute inset-x-3 top-3 flex items-start justify-between gap-3">
+          <span className="glass rounded-full px-2.5 py-1 text-xs font-semibold text-white">
+            {TYPE_LABELS[project.tipo] ?? project.tipo}
+          </span>
+          {suggestion && (
+            <span className="rounded-full bg-surface/95 px-2.5 py-1 shadow-sm">
+              <ComplementLevel nivel={suggestion.nivel} />
+            </span>
+          )}
+        </div>
       </div>
+      <div className="flex flex-1 flex-col gap-4 p-5">
       <div>
         <h3 className="line-clamp-2 text-h3 font-semibold text-ink">{project.titulo}</h3>
         <p className="mt-1 line-clamp-2 text-sm text-ink-2">{project.descripcion}</p>
@@ -75,8 +96,9 @@ export default function ProjectCard({ project, suggestion, className = "" }) {
           to={`/proyectos/${project.id}`}
           className="flex min-h-9 items-center gap-1 rounded-md px-1 text-sm font-semibold text-primary after:absolute after:inset-0 hover:underline"
         >
-          Ver proyecto <ArrowRight aria-hidden="true" className="size-4" />
+          Ver proyecto <ArrowRight aria-hidden="true" className="size-4 transition-transform group-hover:translate-x-0.5" />
         </Link>
+      </div>
       </div>
     </Card>
   )

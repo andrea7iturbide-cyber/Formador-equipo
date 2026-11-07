@@ -87,7 +87,7 @@ export default function ProfileSetupForm({ values, onChange, errors = {} }) {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-h1 font-bold">Configura tu perfil</h1>
+        <h1 className="text-h1 font-extrabold">Configura tu perfil</h1>
         <p className="mt-1 text-ink-2">
           No necesitas formato especial: escribe como si se lo contaras a un compañero. La IA lo organiza por ti y podrás revisarlo antes de guardar.
         </p>

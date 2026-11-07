@@ -12,15 +12,18 @@ import { useToast } from "../components/ui/Toast"
 import ProjectAIReview from "../components/project/ProjectAIReview"
 import RoleCoverage from "../components/project/RoleCoverage"
 import { TypeBadge } from "../components/project/ProjectCard"
-import { CoverageBar } from "../components/team/TeamSummaryCard"
 import InviteModal from "../components/invite/InviteModal"
 import useAsync from "../hooks/useAsync"
+import useAuthenticatedProfile from "../hooks/useAuthenticatedProfile"
 import { actualizarProyecto, obtenerCandidatos, obtenerInvitaciones, obtenerProyecto, solicitarUnirse } from "../services/api"
 import { coverage, formatDate } from "../lib/projects"
 import { getSessionUser } from "../lib/session"
-import { availableRoles } from "../lib/contracts"
+import { availableRoles, confirmedComparison } from "../lib/contracts"
+import { projectCover } from "../lib/projectCovers"
 import { inputCls } from "../lib/ui"
 import CandidatesEmptyState from "../components/project/CandidatesEmptyState"
+
+const CANDIDATE_STEPS = ["Revisando los roles pendientes", "Comparando perfiles compatibles", "Ordenando sugerencias"]
 
 /* ------------------------------ Encabezado ------------------------------ */
 
@@ -34,14 +37,23 @@ function ProjectHeader({ project, action }) {
   const usuarioLocal = getSessionUser()
   const esActual = usuarioLocal.id_usuario !== undefined && String(creador.id) === String(usuarioLocal.id_usuario)
   return (
-    <Card className="animate-fade-up p-5 sm:p-7">
-      <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
-        <div className="min-w-0 flex-1">
-          <div className="mb-3 flex flex-wrap items-center gap-2">
-            <TypeBadge tipo={project.tipo} />
-            {project.materia && <span className="text-xs text-ink-2">{project.materia}</span>}
+    <Card className="animate-fade-up overflow-hidden">
+      {/* Portada ilustrativa de la categoría con el título encima */}
+      <div className="relative isolate h-44 sm:h-56">
+        <img src={projectCover(project)} alt="" className="absolute inset-0 -z-10 size-full object-cover" />
+        <div aria-hidden="true" className="absolute inset-0 -z-10 bg-linear-to-t from-stage/90 via-stage/45 to-stage/10" />
+        <div className="flex h-full flex-col justify-end p-5 text-white sm:p-7">
+          <div className="mb-2 flex flex-wrap items-center gap-2">
+            <span className="glass rounded-full px-2.5 py-1 text-xs font-semibold">
+              <TypeBadge tipo={project.tipo} bare />
+            </span>
+            {project.materia && <span className="text-xs font-medium text-white/85">{project.materia}</span>}
           </div>
-          <h1 className="text-h1 font-bold text-ink">{project.titulo}</h1>
+          <h1 className="text-h1 font-extrabold text-balance">{project.titulo}</h1>
+        </div>
+      </div>
+      <div className="flex flex-col gap-5 p-5 sm:p-7 lg:flex-row lg:items-start lg:justify-between">
+        <div className="min-w-0 flex-1">
           <div className="mt-3 flex items-center gap-2 text-sm text-ink-2">
             <Avatar name={esActual ? usuarioLocal.nombre || nombreCreador : nombreCreador} size="xs" />
             Creado por <span className="font-medium text-ink">{esActual ? "ti" : nombreCreador}</span>
@@ -83,7 +95,7 @@ function Candidates({ project }) {
   if (cands.loading) {
     return (
       <div className="space-y-4" aria-busy="true">
-        <AILoading text="La IA está buscando a quién le falta a tu equipo…" />
+        <AILoading text="La IA está buscando a quién le falta a tu equipo" steps={CANDIDATE_STEPS} />
         <CardSkeleton />
       </div>
     )
@@ -414,7 +426,10 @@ function ProjectDetailPage({ id }) {
   const [joinOpen, setJoinOpen] = useState(false)
   const [requestedRol, setRequestedRol] = useState(null)
   const [editOpen, setEditOpen] = useState(false)
+  const [joinRolId, setJoinRolId] = useState(null)
   const toast = useToast()
+  // Solo perfiles confirmados se comparan (misma regla que el resto de la plataforma)
+  const viewer = confirmedComparison(useAuthenticatedProfile())
 
   const invitedByRole = useMemo(() => {
     if (!project) return {}
@@ -481,6 +496,7 @@ function ProjectDetailPage({ id }) {
   const pendingApplication = (sentInvitations.data ?? []).find((item) =>
     String(item.projectId) === String(project.id) && item.estado === "pendiente" &&
     item.tipo === "enviada" && item.tipoSolicitud === "unirse")
+  const puedePostularse = !esDueno && !esIntegrante && project.puede_solicitar && availableRoles(project).length > 0 && !requestedRol && !pendingApplication
   let action
   if (esDueno) {
     action = (
@@ -502,7 +518,7 @@ function ProjectDetailPage({ id }) {
         <CircleCheck aria-hidden="true" className="size-4" /> Solicitud enviada
       </Button>
     ) : (
-      <Button onClick={() => setJoinOpen(true)} className="w-full sm:w-auto">
+      <Button onClick={() => { setJoinRolId(null); setJoinOpen(true) }} className="w-full sm:w-auto">
         <Hand aria-hidden="true" className="size-4" /> Solicitar unirme
       </Button>
     )
@@ -519,25 +535,48 @@ function ProjectDetailPage({ id }) {
         {!esDueno && !project.requisitos_confirmados && <p role="status" className="rounded-lg bg-ai-soft p-4 text-sm">El creador está revisando los requisitos actuales. El análisis anterior ya no se utiliza.</p>}
 
         <section aria-labelledby="cov-title" className="animate-fade-up [animation-delay:120ms]">
-          <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-            <div>
-              <h2 id="cov-title" className="text-h2 font-semibold">
-                Mapa de cobertura de roles
+          <div className="mb-6 flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
+            <div className="max-w-xl">
+              <p className="eyebrow text-highlight-ink">Roles del equipo</p>
+              <h2 id="cov-title" className="text-h2 mt-2 font-extrabold">
+                {total - cubiertos > 0 ? (
+                  <>
+                    {total - cubiertos} {total - cubiertos === 1 ? "rol abierto" : "roles abiertos"}{" "}
+                    <span className="font-serif text-[1.12em] font-normal text-ink-2 italic">de {total}</span>
+                  </>
+                ) : (
+                  <>Equipo <span className="font-serif text-[1.12em] font-normal text-success-ink italic">completo</span></>
+                )}
               </h2>
-              <p className="text-sm text-ink-2">Roles asignados a participantes reales y vacantes pendientes. La asignación de rol no acredita habilidades.</p>
+              <p className="mt-1 text-sm text-ink-2">Roles asignados a participantes reales y vacantes pendientes. La asignación de rol no acredita habilidades.</p>
             </div>
-            <div className="w-full sm:w-64">
-              <CoverageBar cubiertos={cubiertos} total={total} />
+            <div className="w-full sm:w-72" role="img" aria-label={`${cubiertos} de ${total} roles cubiertos`}>
+              <div className="flex h-3 gap-1">
+                {project.roles.map((r) => (
+                  <span key={r.id} className={`flex-1 rounded-full ${r.cubiertoPor ? "bg-success" : "bg-linear-to-r from-highlight to-[#f08a3e]"}`} />
+                ))}
+              </div>
+              <p className="mt-2 flex justify-between text-xs font-semibold">
+                <span className="text-success-ink">{cubiertos} cubiertos</span>
+                <span className="text-highlight-ink">{total - cubiertos} por cubrir</span>
+              </p>
             </div>
           </div>
-          <RoleCoverage roles={project.roles} invitedByRole={esDueno ? invitedByRole : {}} highlightRolId={requestedRol} />
+          <RoleCoverage
+            roles={project.roles}
+            invitedByRole={esDueno ? invitedByRole : {}}
+            highlightRolId={requestedRol}
+            viewerSkills={esDueno ? [] : (viewer?.fortalezas ?? []).map((f) => f.nombre)}
+            appliedRolId={requestedRol ?? (pendingApplication && project.roles.find((r) => r.nombre === pendingApplication.rol)?.id)}
+            onApply={puedePostularse ? (rolId) => { setJoinRolId(rolId); setJoinOpen(true) } : undefined}
+          />
         </section>
 
         {esDueno && project.requisitos_confirmados && (
           <section aria-labelledby="cand-title" className="animate-fade-up [animation-delay:180ms]">
             <div className="mb-5 flex flex-wrap items-end justify-between gap-2">
               <div>
-                <h2 id="cand-title" className="text-h2 font-semibold">
+                <h2 id="cand-title" className="text-h2 font-extrabold">
                   Candidatos recomendados
                 </h2>
                 <p className="text-sm text-ink-2">Revisa la evidencia y elige un rol disponible antes de invitar.</p>
@@ -554,7 +593,7 @@ function ProjectDetailPage({ id }) {
           open
           onClose={() => setJoinOpen(false)}
           project={project}
-          defaultRolId={null}
+          defaultRolId={availableRoles(project).some((r) => String(r.id) === String(joinRolId)) ? joinRolId : null}
           onSent={setRequestedRol}
         />
       )}

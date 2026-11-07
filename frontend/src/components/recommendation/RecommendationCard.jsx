@@ -102,7 +102,7 @@ export default function RecommendationCard({
       <header className="flex items-start gap-3">
         <Avatar name={student.nombre} size={expanded ? "lg" : "md"} />
         <div className="min-w-0 flex-1">
-          <h3 className={`truncate font-semibold text-ink ${expanded ? "text-h2" : "text-h3"}`}>{student.nombre}</h3>
+          <h3 className={`truncate font-extrabold text-ink ${expanded ? "text-h2" : "text-h3"}`}>{student.nombre}</h3>
           <p className="truncate text-sm text-ink-2">
             {student.carrera} · {student.semestre}.º semestre
           </p>
@@ -122,7 +122,7 @@ export default function RecommendationCard({
 
       {/* Habilidades que aporta */}
       <div>
-        <p className="mb-2 text-label font-semibold tracking-wide text-ink-2 uppercase">Aporta</p>
+        <p className="eyebrow mb-2 text-ink-2">Aporta</p>
         <ul className="flex flex-wrap gap-1.5">
           {rec.aporta.map((h) => (
             <li key={h}>
@@ -146,7 +146,7 @@ export default function RecommendationCard({
         <div className="grid gap-5 md:grid-cols-2">
           {project && (
             <div>
-              <p className="mb-2 text-label font-semibold tracking-wide text-ink-2 uppercase">En tu proyecto</p>
+              <p className="eyebrow mb-2 text-ink-2">En tu proyecto</p>
               <ul className="space-y-1.5">
                 {project.roles
                   .filter((r) => !r.cubiertoPor)
@@ -173,7 +173,7 @@ export default function RecommendationCard({
               </ul>
               {interesesComunes.length > 0 && (
                 <div className="mt-4">
-                  <p className="mb-2 text-label font-semibold tracking-wide text-ink-2 uppercase">Intereses en común</p>
+                  <p className="eyebrow mb-2 text-ink-2">Intereses en común</p>
                   <div className="flex flex-wrap gap-1.5">
                     {interesesComunes.map((i) => (
                       <SkillChip key={i}>{i}</SkillChip>
@@ -185,7 +185,7 @@ export default function RecommendationCard({
           )}
           {student.disponibilidad && (
             <div>
-              <p className="mb-2 text-label font-semibold tracking-wide text-ink-2 uppercase">Horarios</p>
+              <p className="eyebrow mb-2 text-ink-2">Horarios</p>
               <AvailabilityGrid value={student.disponibilidad} compare={currentUser?.disponibilidad} size="sm" />
             </div>
           )}
