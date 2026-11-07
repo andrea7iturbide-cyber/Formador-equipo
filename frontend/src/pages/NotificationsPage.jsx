@@ -20,9 +20,8 @@ export default function NotificationsPage() {
       <PageHeader
         icon={Bell}
         tone="turquesa"
-        eyebrow="Notificaciones"
-        title="Lo nuevo"
-        accent="para ti"
+        eyebrow="Lo nuevo para ti"
+        title="Notificaciones"
         desc="Invitaciones, recomendaciones y actividad real de tus equipos."
       />
 

@@ -203,7 +203,7 @@ export default function StudentsPage() {
           <div className="max-w-2xl">
             <p className="eyebrow text-accent">Comunidad</p>
             <h1 className="text-h1 mt-3 font-extrabold">
-              Encuentra a quien <span className="font-serif text-[1.15em] font-normal text-accent italic">complementa</span> tu equipo
+              Estudiantes
             </h1>
             <p className="mt-3 text-white/75">Busca por nombre, carrera o habilidad. La IA resalta a quien cubre lo que a tu proyecto le falta.</p>
 

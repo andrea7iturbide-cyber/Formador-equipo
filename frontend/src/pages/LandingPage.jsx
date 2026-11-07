@@ -55,7 +55,7 @@ function HowItWorks() {
   return (
     <section id="como-funciona" className="scroll-mt-20 border-y border-line bg-surface py-24">
       <div className="mx-auto max-w-6xl px-4 sm:px-8">
-        <SectionHeading center eyebrow="Cómo funciona" title="De tu perfil a tu equipo en" accent="cuatro pasos" desc="La IA trabaja en segundo plano; tú siempre decides." />
+        <SectionHeading center eyebrow="Cómo funciona" title="De tu perfil a tu equipo en cuatro pasos" desc="La IA trabaja en segundo plano; tú siempre decides." />
         {/* Línea de tiempo: sin tarjetas, conectada por un degradado con los colores de cada paso */}
         <ol className="relative mt-16 grid gap-10 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
           <span aria-hidden="true" className="absolute top-8 right-[12%] left-[12%] h-1 rounded-full bg-linear-to-r from-primary via-accent to-success opacity-60 max-lg:hidden" />
@@ -150,11 +150,10 @@ function ForWhom() {
   return (
     <section id="para-quien" className="mx-auto max-w-6xl scroll-mt-20 px-4 py-24 sm:px-8">
       <SectionHeading
-        eyebrow="Para quién es"
+        eyebrow="Para ti"
         eyebrowCls="text-highlight-ink"
-        title="Hay un equipo que"
-        accent="te necesita"
-        desc="Llegues con una idea, con una habilidad o con ganas de aprender."
+        title="¿Para quién es Comple-team?"
+        desc="Llegues con una idea, con una habilidad o con ganas de aprender, hay un equipo que te necesita."
       />
       {/* Tres columnas sin cajas: el color de cada ícono las distingue */}
       <ul className="mt-12 grid gap-10 md:grid-cols-3 md:gap-0 md:divide-x md:divide-line">

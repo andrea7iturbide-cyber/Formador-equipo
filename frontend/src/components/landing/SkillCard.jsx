@@ -57,7 +57,7 @@ export default function SkillCard({ name, role, skills }) {
         <span className={`shrink-0 rounded-full px-2.5 py-1 text-label font-semibold ${area.tint}`}>{area.label}</span>
       </div>
       <div>
-        <p className="eyebrow mb-2 text-ink-2">Aporta a un equipo</p>
+        <p className="eyebrow mb-2 text-ink-2">Sabe hacer</p>
         <ul className="flex flex-wrap gap-1.5" aria-label={`Fortalezas de ${name}`}>
           {skills.map((skill) => (
             <li key={skill} className={`rounded-lg px-2.5 py-1 text-xs font-medium ${area.tint}`}>

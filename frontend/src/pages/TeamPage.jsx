@@ -45,14 +45,12 @@ function Metric({ label, value, total, color }) {
   )
 }
 
-function SectionTitle({ id, eyebrow, eyebrowCls, title, accent, children }) {
+function SectionTitle({ id, eyebrow, eyebrowCls, title, children }) {
   return (
     <div className="mb-5 flex flex-wrap items-end justify-between gap-3">
       <div>
         <p className={`eyebrow ${eyebrowCls}`}>{eyebrow}</p>
-        <h2 id={id} className="mt-1 text-h2 font-extrabold">
-          {title} <span className="font-serif text-[1.12em] font-normal italic">{accent}</span>
-        </h2>
+        <h2 id={id} className="mt-1 text-h2 font-extrabold">{title}</h2>
       </div>
       {children}
     </div>
@@ -153,7 +151,7 @@ export default function TeamPage() {
 
       {/* ------------------------------- Cobertura ------------------------------- */}
       <section aria-labelledby="coverage-title" className="mb-12 animate-fade-up [animation-delay:80ms]">
-        <SectionTitle id="coverage-title" eyebrow="Cobertura del equipo" eyebrowCls="text-success-ink" title="Lo que" accent="ya cubren" />
+        <SectionTitle id="coverage-title" eyebrow="Habilidades" eyebrowCls="text-success-ink" title="Cobertura del equipo" />
         <Card className="p-5 sm:p-7">
           <TeamCoverageChart coverage={team.cobertura_habilidades} />
         </Card>
@@ -161,7 +159,7 @@ export default function TeamPage() {
 
       {/* ------------------------------ Integrantes ------------------------------ */}
       <section aria-labelledby="members-title" className="animate-fade-up [animation-delay:160ms]">
-        <SectionTitle id="members-title" eyebrow={`Integrantes · ${members.length}`} eyebrowCls="text-primary" title="Quién" accent="aporta qué" />
+        <SectionTitle id="members-title" eyebrow={`${members.length} ${members.length === 1 ? "persona" : "personas"}`} eyebrowCls="text-primary" title="Integrantes" />
         {members.length === 0 ? (
           <EmptyState title="Aún no hay participantes registrados" />
         ) : (
@@ -194,7 +192,7 @@ export default function TeamPage() {
 
                     {member.fortalezas.length > 0 && (
                       <div>
-                        <p className="eyebrow mb-2 text-ink-2">Aporta al equipo</p>
+                        <p className="eyebrow mb-2 text-ink-2">Habilidades</p>
                         <ul className="flex flex-wrap gap-1.5">
                           {member.fortalezas.map((fortaleza) => {
                             const cubre = habilidadesCubiertas.has(fortaleza.nombre.toLowerCase())

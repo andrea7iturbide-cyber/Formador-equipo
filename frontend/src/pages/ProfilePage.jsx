@@ -265,9 +265,8 @@ function MyProfile() {
       <PageHeader
         icon={UserRound}
         tone="violeta"
-        eyebrow="Tu perfil"
-        title="Lo que"
-        accent="aportas"
+        eyebrow="Tu presentación"
+        title="Mi perfil"
         desc="Tú decides qué se muestra y qué usa la IA."
         actions={
         <Segmented

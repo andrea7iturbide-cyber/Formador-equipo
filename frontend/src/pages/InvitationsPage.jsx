@@ -48,8 +48,7 @@ export default function InvitationsPage() {
         icon={Mail}
         tone="ambar"
         eyebrow="Te buscan"
-        title="Tus"
-        accent="invitaciones"
+        title="Invitaciones"
         desc="Las que te enviaron y las que tú enviaste, con su estado."
       />
 

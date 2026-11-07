@@ -16,8 +16,7 @@ export default function TeamsPage() {
         icon={UsersRound}
         tone="verde"
         eyebrow="Tu colaboración"
-        title="Mis"
-        accent="equipos"
+        title="Mis equipos"
         desc="Quién aporta qué en cada equipo y qué falta por cubrir."
         actions={
           <Button variant="secondary" as={Link} to="/invitaciones">

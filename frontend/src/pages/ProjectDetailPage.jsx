@@ -542,10 +542,10 @@ function ProjectDetailPage({ id }) {
                 {total - cubiertos > 0 ? (
                   <>
                     {total - cubiertos} {total - cubiertos === 1 ? "rol abierto" : "roles abiertos"}{" "}
-                    <span className="font-serif text-[1.12em] font-normal text-ink-2 italic">de {total}</span>
+                    <span className="font-semibold text-ink-2">de {total}</span>
                   </>
                 ) : (
-                  <>Equipo <span className="font-serif text-[1.12em] font-normal text-success-ink italic">completo</span></>
+                  <>Equipo <span className="text-success-ink">completo</span></>
                 )}
               </h2>
               <p className="mt-1 text-sm text-ink-2">Roles asignados a participantes reales y vacantes pendientes. La asignación de rol no acredita habilidades.</p>

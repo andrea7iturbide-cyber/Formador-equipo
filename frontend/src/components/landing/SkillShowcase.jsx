@@ -6,10 +6,9 @@ export default function SkillShowcase({ profiles }) {
   return (
     <section id="estudiantes" className="mx-auto max-w-6xl scroll-mt-20 px-4 py-24 sm:px-8">
       <SectionHeading
-        eyebrow="Talento de todas las carreras"
+        eyebrow="Estudiantes"
         eyebrowCls="text-[#a3245a]"
-        title="Cada perfil suma lo que"
-        accent="a otro le falta"
+        title="Talento de todas las carreras"
         desc="Diseño, ingeniería, administración, psicología… Mira cómo se ve un perfil en Comple-team."
       />
       <ul className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">

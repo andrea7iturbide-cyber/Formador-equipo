@@ -40,10 +40,9 @@ export default function ProjectsPage() {
       <PageHeader
         icon={Lightbulb}
         tone="violeta"
-        eyebrow="Proyectos"
-        title="Encuentra dónde"
-        accent="encajas"
-        desc="Proyectos donde lo que sabes hacer es justo lo que falta."
+        eyebrow="Explora"
+        title="Proyectos"
+        desc="Encuentra dónde lo que sabes hacer es justo lo que falta."
         actions={
           <Button as={Link} to="/proyectos/nuevo">
             <Plus aria-hidden="true" className="size-4" /> Crear proyecto
