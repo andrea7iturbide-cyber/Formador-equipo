@@ -351,6 +351,7 @@ export default function StudentsPage() {
                   active={student.id === selectedId}
                   aiRec={recs.get(student.id)}
                   complementa={quieroAprender}
+                  viewerBloques={viewer?.disponibilidad ?? []}
                   invited={invitados.has(student.id)}
                   onSelect={() => seleccionar(student.id)}
                 />
@@ -364,7 +365,7 @@ export default function StudentsPage() {
             <div key={selectedStudent.id} className="animate-fade-up space-y-4">
               {selectedRec && <AIInsight rec={selectedRec} project={selectedProject} />}
               <PublicProfile student={selectedStudent} viewer={viewer ?? undefined} />
-              <div className="flex flex-col gap-3 rounded-2xl border border-line bg-surface p-4 sm:flex-row sm:items-end">
+              <div className="flex flex-col gap-3 rounded-2xl border border-line bg-surface p-4">
                 <div className="min-w-0 flex-1 space-y-3">
                   <label className="block text-sm font-semibold" htmlFor="invite-project">
                     Invitar a uno de tus eventos

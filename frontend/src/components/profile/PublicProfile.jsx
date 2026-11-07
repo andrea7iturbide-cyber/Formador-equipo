@@ -37,7 +37,7 @@ export default function PublicProfile({ student, preview = false, actions, viewe
   const intereses = new Set(currentUser?.intereses ?? [])
 
   return (
-    <Card className="overflow-hidden">
+    <Card className="@container overflow-hidden">
       <div className="h-20 border-b border-line bg-surface-2" aria-hidden="true" />
       <div className="px-5 pb-6 sm:px-7">
         <div className="-mt-10 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
@@ -60,7 +60,7 @@ export default function PublicProfile({ student, preview = false, actions, viewe
           </section>
         )}
 
-        <div className="mt-8 grid gap-8 md:grid-cols-2">
+        <div className="mt-8 grid grid-cols-1 gap-8 @2xl:grid-cols-2">
           <div className="space-y-8">
             <Block title="Fortalezas">
               {vis.fortalezas ? (
@@ -133,9 +133,9 @@ export default function PublicProfile({ student, preview = false, actions, viewe
 
             <Block title="Contacto">
               {vis.correo ? (
-                <p className="flex items-center gap-2 text-sm">
-                  <Mail aria-hidden="true" className="size-4 text-ink-2" />
-                  <span className="truncate">{student.correo}</span>
+                <p className="flex items-start gap-2 text-sm">
+                  <Mail aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-ink-2" />
+                  <span className="min-w-0 [overflow-wrap:anywhere]">{student.correo}</span>
                 </p>
               ) : (
                 <Hidden>Prefiere no compartir su correo</Hidden>

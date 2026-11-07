@@ -1,24 +1,62 @@
-import { Check, Sparkles } from "lucide-react"
+import { CalendarCheck, Check, EyeOff, Sparkles } from "lucide-react"
 import Avatar from "../ui/Avatar"
-import { DIAS, DIAS_LABEL } from "../../data/mockData"
+import { DIAS, DIAS_LABEL, FRANJAS } from "../../data/mockData"
 
-/** Días con al menos un bloque libre; null si la persona oculta su horario. */
-function diasDisponibles(student) {
+const FRANJAS_PLURAL = { manana: "Mañanas", tarde: "Tardes", noche: "Noches" }
+
+/** Bloques libres ("lun-tarde"…); null si la persona oculta su horario. */
+function bloquesDisponibles(student) {
   if (student.visibilidad?.disponibilidad === false) return null
-  return new Set((student.disponibilidad ?? []).map((bloque) => bloque.split("-")[0]))
+  return student.disponibilidad ?? []
 }
 
-// Semana compacta: un punto por día, relleno si hay al menos un bloque libre.
-export function WeekDots({ dias, className = "" }) {
-  if (!dias) return <span className={`text-xs text-ink-2 ${className}`}>Horario privado</span>
+/**
+ * Disponibilidad legible: días con dos letras (no hay dos "M"), franjas con las
+ * mismas palabras que los filtros y, si tu perfil está confirmado, los horarios en común.
+ */
+export function Availability({ bloques, comunes = 0, className = "" }) {
+  if (!bloques) {
+    return (
+      <span className={`flex items-center gap-1.5 text-xs text-ink-2 ${className}`}>
+        <EyeOff aria-hidden="true" className="size-3.5" /> Horario privado
+      </span>
+    )
+  }
+  if (bloques.length === 0) {
+    return <span className={`block text-xs text-ink-2 ${className}`}>Aún no indica su horario</span>
+  }
+  const dias = new Set(bloques.map((b) => b.split("-")[0]))
+  const franjas = FRANJAS.filter((f) => bloques.some((b) => b.endsWith(`-${f}`)))
+  const resumen = `Disponible ${[...dias].map((d) => DIAS_LABEL[d]).join(", ")}; ${franjas.map((f) => FRANJAS_PLURAL[f].toLowerCase()).join(" y ")}`
+
   return (
-    <span className={`flex items-center gap-1 ${className}`} aria-label={`Disponible ${dias.size} de ${DIAS.length} días`}>
-      {DIAS.map((dia) => (
-        <span key={dia} aria-hidden="true" title={DIAS_LABEL[dia]} className="flex flex-col items-center gap-0.5">
-          <span className={`size-1.5 rounded-full ${dias.has(dia) ? "bg-success" : "bg-line"}`} />
-          <span className="text-label leading-none font-semibold text-ink-2">{DIAS_LABEL[dia][0]}</span>
+    <span className={`flex flex-wrap items-center gap-x-3 gap-y-1.5 ${className}`}>
+      <span className="sr-only">{resumen}.</span>
+      <span aria-hidden="true" className="flex gap-1">
+        {DIAS.map((dia) => {
+          const libre = dias.has(dia)
+          return (
+            <span
+              key={dia}
+              title={DIAS_LABEL[dia]}
+              className={`grid h-6 min-w-7 place-items-center rounded-md px-1 text-xs font-semibold ${
+                libre ? "bg-success-soft text-success-ink ring-1 ring-success-line" : "bg-surface-2 text-ink-2/60"
+              }`}
+            >
+              {DIAS_LABEL[dia].slice(0, 2)}
+            </span>
+          )
+        })}
+      </span>
+      <span aria-hidden="true" className="text-xs font-medium text-ink-2">
+        {franjas.map((f) => FRANJAS_PLURAL[f]).join(" · ")}
+      </span>
+      {comunes > 0 && (
+        <span className="inline-flex items-center gap-1 rounded-full bg-success-soft px-2 py-0.5 text-xs font-semibold text-success-ink ring-1 ring-success-line">
+          <CalendarCheck aria-hidden="true" className="size-3.5" />
+          {comunes} {comunes === 1 ? "horario" : "horarios"} en común
         </span>
-      ))}
+      )}
     </span>
   )
 }
@@ -27,9 +65,11 @@ export function WeekDots({ dias, className = "" }) {
  * Fila del directorio. Las señales se distinguen por color + ícono + texto:
  * turquesa = sugerido por IA · ámbar = sabe algo que tú quieres aprender.
  */
-export default function StudentRow({ student, active, aiRec, complementa = [], invited, onSelect, index = 0 }) {
-  const dias = diasDisponibles(student)
-  const disponible = dias && dias.size > 0
+export default function StudentRow({ student, active, aiRec, complementa = [], viewerBloques = [], invited, onSelect, index = 0 }) {
+  const bloques = bloquesDisponibles(student)
+  const disponible = bloques && bloques.length > 0
+  const mios = new Set(viewerBloques)
+  const comunes = bloques ? bloques.filter((b) => mios.has(b)).length : 0
   const aprender = new Set(complementa.map((s) => s.toLowerCase()))
   const skills = student.fortalezas ?? []
 
@@ -98,9 +138,9 @@ export default function StudentRow({ student, active, aiRec, complementa = [], i
           ) : (
             <span className="mt-2 block text-xs text-ink-2">Aún no agrega fortalezas.</span>
           )}
-        </span>
 
-        <WeekDots dias={dias} className="mt-1 shrink-0 max-sm:hidden" />
+          <Availability bloques={bloques} comunes={comunes} className="mt-3" />
+        </span>
       </button>
     </li>
   )

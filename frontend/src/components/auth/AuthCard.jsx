@@ -140,7 +140,7 @@ function BrandPanel({ isSignUp, onSwitch }) {
   const dark = isSignUp
   return (
     <aside
-      className={`relative isolate flex flex-col justify-between overflow-hidden p-10 transition-colors duration-700 max-md:hidden lg:p-12 ${
+      className={`@container relative isolate flex flex-col justify-between overflow-hidden p-10 transition-colors duration-700 max-md:hidden lg:p-12 ${
         dark ? "bg-stage text-white" : "bg-surface text-ink"
       }`}
     >
@@ -155,8 +155,9 @@ function BrandPanel({ isSignUp, onSwitch }) {
         />
       </div>
 
-      {/* key: la animación se repite al cambiar entre registro e inicio de sesión */}
-      <p key={isSignUp ? "registro" : "login"} className="text-[clamp(2.25rem,4vw,3.4rem)] leading-[0.95] font-extrabold tracking-tight uppercase">
+      {/* El tamaño sigue al ancho del panel (cqi), no al de la pantalla: "COMPLEMENTA" siempre cabe.
+          key: la animación se repite al cambiar entre registro e inicio de sesión */}
+      <p key={isSignUp ? "registro" : "login"} className="text-[clamp(1.75rem,11.5cqi,3.4rem)] leading-[0.95] font-extrabold tracking-tight uppercase">
         <span className={`block animate-fade-up [animation-delay:100ms] ${dark ? "text-accent" : "text-primary"}`}>Aporta</span>
         <span className={`mt-2 flex animate-fade-up items-center gap-3 [animation-delay:350ms] ${dark ? "text-white" : "text-ink"}`}>
           <ArrowRight aria-hidden="true" className={`size-[0.8em] ${dark ? "text-accent" : "text-primary"}`} strokeWidth={3} />
